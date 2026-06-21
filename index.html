@@ -60,8 +60,8 @@ img{display:block;max-width:100%}
 .board{
   position:relative;
   min-height:calc(100svh - 48px);
-  overflow:hidden;
-  background-image:url('cork-wallpaper-25-wallpaper-background-hd.webp');
+  overflow:visible;
+  background-image:url('Material/cork-wallpaper-25-wallpaper-background-hd.webp');
   background-size:cover;
   background-position:center;
 }
@@ -87,11 +87,11 @@ img{display:block;max-width:100%}
   box-shadow:0 1px 1px rgba(0,0,0,.14),2px 4px 8px rgba(0,0,0,.18),4px 10px 22px rgba(0,0,0,.14),8px 20px 40px rgba(0,0,0,.08);
   transition:transform .3s var(--spring),box-shadow .3s;
   background:#FEFCF8;
-  overflow:hidden;
+  overflow:visible;
 }
-.pc:hover{
-  box-shadow:0 2px 3px rgba(0,0,0,.18),3px 8px 16px rgba(0,0,0,.22),8px 20px 40px rgba(0,0,0,.18),12px 32px 60px rgba(0,0,0,.10);
-}
+/* ══ WASHI TAPE ══ */
+.washi{position:absolute;z-index:6;pointer-events:none;display:block;filter:drop-shadow(1px 2px 3px rgba(0,0,0,.18))}
+/* hover lift/shadow removed per design — only the business card reacts */
 
 /* Image filling a card */
 .pc-img{display:block;width:100%;height:auto}
@@ -104,34 +104,37 @@ img{display:block;max-width:100%}
 /* ══ INDIVIDUAL CARD STYLES ══ */
 
 /* ① Girl in polaroid — upper left */
-.pc-girl{width:130px;left:2%;top:6%;transform:rotate(-3deg);z-index:2;background:transparent;box-shadow:none}
-.pc-girl:hover{transform:rotate(-1.5deg) translateY(-4px)}
-.pc-girl .polaroid-photo{position:absolute;top:5.5%;left:7%;width:86%;height:71%;object-fit:cover;z-index:1}
-.pc-girl .polaroid-frame{position:relative;display:block;width:100%;z-index:2;filter:drop-shadow(2px 5px 12px rgba(0,0,0,.28))}
+/* ① Girl — pure-CSS polaroid, real polaroid proportions */
+.pc-girl{width:150px;left:1.5%;top:47%;transform:rotate(3deg);z-index:2;background:#FDFBF6;border-radius:2px;padding:9px 9px 32px;
+  box-shadow:0 1px 1px rgba(0,0,0,.14),2px 5px 12px rgba(0,0,0,.24),5px 14px 30px rgba(0,0,0,.14)}
+.pc-girl .polaroid-photo{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:#fff}
+.washi-polaroid{top:-15px;left:50%;width:78px;transform:translateX(-50%) rotate(-8deg)}
 
 /* ② Skills note — note.png has built-in pin */
-.pc-skills{width:22%;min-width:185px;left:2%;top:30%;transform:rotate(-0.8deg);z-index:2;background:transparent;box-shadow:none}
-.pc-skills:hover{transform:rotate(.5deg) translateY(-4px)}
+.pc-skills{width:22%;min-width:185px;left:2%;top:3%;transform:rotate(-2.5deg);z-index:2;background:transparent;box-shadow:none}
 .pc-skills .pc-img{border-radius:2px;box-shadow:2px 4px 10px rgba(0,0,0,.22),5px 12px 28px rgba(0,0,0,.14)}
-.skills-text{position:absolute;top:12%;left:7%;right:5%}
+.skills-text{position:absolute;top:14%;left:9%;right:8%}
 .skills-label{font-family:"DM Serif Display",serif;font-size:clamp(11px,1.1vw,15px);color:var(--ink);margin-bottom:8px;border-bottom:1px solid rgba(61,48,40,.15);padding-bottom:5px}
 .skills-list{list-style:none;display:flex;flex-direction:column;gap:5px}
-.skills-list li{font-size:clamp(9px,.9vw,12px);color:var(--ink-mid);display:flex;align-items:center;gap:6px}
-.skill-fl{width:16px;height:auto;flex-shrink:0;display:block}
+.skills-list li{font-size:clamp(9px,.9vw,12px);color:var(--ink-mid);display:flex;align-items:center;gap:7px}
+.skill-fl{width:15px;height:auto;flex-shrink:0;display:block}
+.skills-list li:nth-child(1) .skill-fl{filter:hue-rotate(0deg)}
+.skills-list li:nth-child(2) .skill-fl{filter:hue-rotate(45deg)}
+.skills-list li:nth-child(3) .skill-fl{filter:hue-rotate(90deg)}
+.skills-list li:nth-child(4) .skill-fl{filter:hue-rotate(135deg)}
+.skills-list li:nth-child(5) .skill-fl{filter:hue-rotate(180deg)}
+.skills-list li:nth-child(6) .skill-fl{filter:hue-rotate(225deg)}
+.skills-list li:nth-child(7) .skill-fl{filter:hue-rotate(270deg)}
+.skills-list li:nth-child(8) .skill-fl{filter:hue-rotate(315deg)}
 
 /* ③ KPMG flight tag */
-.pc-flight{width:155px;left:2%;bottom:22%;transform:rotate(-6deg);z-index:2;background:transparent;box-shadow:none}
-.pc-flight:hover{transform:rotate(-3.5deg) translateY(-4px)}
-.pc-flight .pc-img{border-radius:4px;box-shadow:2px 4px 10px rgba(0,0,0,.2),5px 12px 28px rgba(0,0,0,.12)}
-.flight-text{position:absolute;top:18%;left:0;right:0;text-align:center}
-.flight-dest{font-family:"DM Serif Display",serif;font-size:13px;color:#2A1A0A;letter-spacing:.02em;margin-bottom:2px}
-.flight-co{font-size:10px;font-weight:700;letter-spacing:.12em;color:#2A1A0A;text-transform:uppercase;position:absolute;top:57%;left:0;right:0;text-align:center}
-.flight-ribbon{position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:70%;pointer-events:none}
-.flight-ribbon img{width:100%}
+.pc-flight{width:175px;left:2%;bottom:22%;transform:rotate(-7deg);z-index:2;background:transparent;box-shadow:none}
+.pc-flight .pc-img{display:block;width:100%;filter:drop-shadow(2px 5px 12px rgba(0,0,0,.22))}
+.flight-dest{position:absolute;top:38%;left:0;right:0;text-align:center;font-family:"DM Serif Display",serif;font-size:14px;color:#8A1A20;letter-spacing:.02em}
+.flight-co{position:absolute;top:60.5%;left:0;right:0;text-align:center;font-size:16px;font-weight:700;letter-spacing:.14em;color:#FBEFE2;text-transform:uppercase}
 
 /* ④ TeamViewer ticket */
-.pc-ticket{width:175px;left:5%;bottom:9%;transform:rotate(3deg);z-index:2;background:transparent;box-shadow:none}
-.pc-ticket:hover{transform:rotate(1.5deg) translateY(-4px)}
+.pc-ticket{width:175px;left:5%;bottom:9%;transform:rotate(4deg);z-index:2;background:transparent;box-shadow:none}
 .pc-ticket .pc-img{border-radius:4px;box-shadow:2px 4px 10px rgba(0,0,0,.2)}
 .ticket-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .ticket-co{font-family:"DM Serif Display",serif;font-size:14px;color:#2A1A0A;font-style:italic}
@@ -158,12 +161,11 @@ img{display:block;max-width:100%}
 /* ⑥ Main headline card */
 .pc-main{
   width:40%;left:28%;top:11%;
-  transform:rotate(-1.2deg);
+  transform:rotate(-1.5deg);
   padding:30px 34px 34px;
   z-index:3;
 }
 .pc-main::after{content:"";position:absolute;bottom:0;left:0;right:0;height:32%;background:repeating-linear-gradient(transparent,transparent 22px,rgba(160,135,110,.15) 22px,rgba(160,135,110,.15) 23px);pointer-events:none}
-.pc-main:hover{transform:rotate(-.3deg) translateY(-5px)}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
 .hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--sage);animation:blink 2.2s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
@@ -174,8 +176,7 @@ img{display:block;max-width:100%}
 .hero-actions{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1;margin-top:6px}
 
 /* ⑦ Description (note2.png) */
-.pc-desc{width:26%;left:30%;top:64%;transform:rotate(2deg);z-index:2;background:transparent;box-shadow:none}
-.pc-desc:hover{transform:rotate(.8deg) translateY(-4px)}
+.pc-desc{width:26%;left:30%;top:64%;transform:rotate(2.5deg);z-index:2;background:transparent;box-shadow:none}
 .pc-desc .pc-img{border-radius:6px;box-shadow:2px 4px 10px rgba(0,0,0,.2),5px 12px 28px rgba(0,0,0,.12)}
 .desc-text{position:absolute;top:18%;left:12%;right:12%;bottom:18%}
 .desc-text p{font-size:clamp(9px,.85vw,12px);color:var(--ink-mid);line-height:1.55}
@@ -184,7 +185,7 @@ img{display:block;max-width:100%}
 /* ⑧ Business card */
 .pc-business{
   width:220px;left:43%;bottom:8%;
-  transform:rotate(-1.5deg);
+  transform:rotate(-2deg);
   z-index:2;background:#F8F5EE;border-radius:5px;
 }
 .pc-business:hover{transform:rotate(-.3deg) translateY(-5px)}
@@ -196,8 +197,10 @@ img{display:block;max-width:100%}
 .biz-contact{font-size:9.5px;color:var(--ink-soft);line-height:1.7}
 
 /* ⑨ Berlin poster */
-.pc-berlin{width:18%;right:3%;top:5%;transform:rotate(2.5deg);z-index:2}
-.pc-berlin:hover{transform:rotate(1.2deg) translateY(-5px)}
+.pc-berlin{width:18%;right:3%;top:5%;transform:rotate(3deg);z-index:2}
+.pc-berlin .pc-img{display:block;width:100%}
+.washi-berlin-tr{top:8px;right:-20px;width:82px;transform:rotate(-48deg)}
+.washi-berlin-bl{bottom:8px;left:-20px;width:82px;transform:rotate(-48deg)}
 
 /* ⑩ Zuhause note */
 .pc-zuhause{
@@ -206,22 +209,19 @@ img{display:block;max-width:100%}
   padding:11px 13px;
   background:#FDEEA0;z-index:4;
 }
-.pc-zuhause:hover{transform:rotate(2.5deg) translateY(-4px)}
 .pc-zuhause p{font-family:"DM Serif Display",serif;font-size:15px;color:#5A4010;line-height:1.3}
 
 /* ⑪ Vietnam stamp (floating) */
 .deco-stamp{
-  position:absolute;right:20.5%;top:55%;
-  width:65px;transform:rotate(-4deg);
+  position:absolute;right:1.5%;top:36%;
+  width:84px;transform:rotate(-7deg);
   z-index:4;
   box-shadow:1px 2px 6px rgba(0,0,0,.25);
   border-radius:2px;
 }
-.deco-stamp:hover{transform:rotate(-2deg) translateY(-3px)}
 
 /* ⑫ Würzburg — flat photo card (no polaroid) */
-.pc-wuerzburg{width:185px;right:3%;top:42%;transform:rotate(-2deg);z-index:2;padding:0;overflow:hidden}
-.pc-wuerzburg:hover{transform:rotate(-.5deg) translateY(-5px)}
+.pc-wuerzburg{width:190px;right:5%;top:44%;transform:rotate(-3deg);z-index:2;padding:0}
 .pc-wuerzburg .pc-img{width:100%;display:block;object-fit:cover}
 .photo-cap{padding:7px 10px 9px;font-family:"DM Serif Display",serif;font-size:11px;color:var(--ink-mid);font-style:italic;background:#FFFDF8;text-align:center}
 
@@ -229,16 +229,14 @@ img{display:block;max-width:100%}
 .polaroid-wrap{position:relative;display:block}
 
 /* ⑬ Graduation cap card */
-.pc-graduation{width:200px;right:3%;bottom:8%;transform:rotate(1.5deg);z-index:2}
-.pc-graduation:hover{transform:rotate(.3deg) translateY(-5px)}
+.pc-graduation{width:200px;right:3%;bottom:8%;transform:rotate(2deg);z-index:2}
 .pc-graduation .pc-img{width:100%;display:block}
 .grad-text{padding:12px 16px 16px;background:#FFFDF8}
 .grad-title{font-family:"DM Serif Display",serif;font-size:12px;color:var(--ink);line-height:1.3;margin-bottom:3px}
 .grad-sub{font-size:10px;color:var(--ink-soft)}
 
 /* ⑭ Saigon map — LARGE */
-.pc-saigon{width:285px;right:21%;bottom:5%;transform:rotate(-2.5deg);z-index:3}
-.pc-saigon:hover{transform:rotate(-1deg) translateY(-4px)}
+.pc-saigon{width:285px;right:19%;bottom:7%;transform:rotate(-3.5deg);z-index:3}
 .pc-saigon .pc-img{width:100%;display:block}
 .saigon-cap{padding:8px 10px 10px;font-family:"DM Serif Display",serif;font-size:11px;color:var(--ink-mid);font-style:italic;background:#FFFDF8;text-align:center}
 
@@ -394,27 +392,26 @@ img{display:block;max-width:100%}
 
   <!-- ① Girl character inside polaroid frame -->
   <div class="pc pc-girl load d1" aria-label="Character illustration">
-    <div class="polaroid-wrap">
-      <img class="polaroid-photo" src="c7738b2aa4477016388b23feecd2ec39.jpg" alt="Girl character doodle"/>
-      <img class="polaroid-frame" src="pngfind.com-polaroid-frame-png-559852.png" alt=""/>
-    </div>
+    <img class="washi washi-polaroid" src="Material/8344d1987f948a85b2c12a77d4f8767e.png" alt=""/>
+    <img class="polaroid-photo" src="Material/c7738b2aa4477016388b23feecd2ec39.jpg" alt="Girl character doodle"/>
   </div>
 
   <!-- ② Skills note — note.png has its own pin built in -->
   <div class="pc pc-skills load d1">
+    <div class="pin"></div>
     <div class="pc-over">
-      <img class="pc-img" src="note.png" alt=""/>
+      <img class="pc-img" src="Material/note.png" alt=""/>
       <div class="pc-text skills-text">
         <div class="skills-label">What I do</div>
         <ul class="skills-list">
-          <li><img src="flowers.png" class="skill-fl" alt=""/>UI Design</li>
-          <li><img src="flowers.png" class="skill-fl" alt=""/>UX Research</li>
-          <li><img src="flowers.png" class="skill-fl" alt=""/>Wireframing</li>
-          <li><img src="flowers.png" class="skill-fl" alt=""/>Prototyping</li>
-          <li><img src="flowers.png" class="skill-fl" alt=""/>Usability Testing</li>
-          <li><img src="flowers.png" class="skill-fl" alt=""/>User Interviews</li>
-          <li><img src="flowers.png" class="skill-fl" alt=""/>Design Systems</li>
-          <li><img src="flowers.png" class="skill-fl" alt=""/>Requirements Engineering</li>
+          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>UI Design</li>
+          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>UX Research</li>
+          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>Wireframing</li>
+          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>Prototyping</li>
+          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>Usability Testing</li>
+          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>User Interviews</li>
+          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>Design Systems</li>
+          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>Requirements Engineering</li>
         </ul>
       </div>
     </div>
@@ -423,12 +420,8 @@ img{display:block;max-width:100%}
   <!-- ③ KPMG flight tag -->
   <div class="pc pc-flight load d2">
     <div class="pc-over">
-      <!-- pink polka ribbon as tape at top -->
-      <div class="flight-ribbon"><img src="7fc192aacf8554ee6faf90350c7ea8a1.png" alt=""/></div>
-      <img class="pc-img" src="flight.png" alt="KPMG Berlin"/>
-      <div class="flight-text">
-        <div class="flight-dest">Berlin 2024</div>
-      </div>
+      <img class="pc-img" src="Material/flight-removebg-preview.png" alt="KPMG Berlin"/>
+      <div class="flight-dest">Berlin 2024</div>
       <div class="flight-co">KPMG</div>
     </div>
   </div>
@@ -436,7 +429,7 @@ img{display:block;max-width:100%}
   <!-- ④ TeamViewer ticket -->
   <div class="pc pc-ticket load d2">
     <div class="pc-over">
-      <img class="pc-img" src="grafik-removebg-preview.png" alt="TeamViewer ticket"/>
+      <img class="pc-img" src="Material/grafik-removebg-preview.png" alt="TeamViewer ticket"/>
       <div class="ticket-text">
         <div class="ticket-co">TeamViewer</div>
         <div class="ticket-yr">2022 – 2023</div>
@@ -462,7 +455,7 @@ img{display:block;max-width:100%}
   <!-- ⑦ Description on note2 -->
   <div class="pc pc-desc load d3">
     <div class="pc-over">
-      <img class="pc-img" src="note2.png" alt=""/>
+      <img class="pc-img" src="Material/note2-removebg-preview.png" alt=""/>
       <div class="pc-text desc-text">
         <p>I work with teams to understand what they actually need — not just what they say — and translate that into <strong>designs that create real value</strong>, not just pretty screens.</p>
       </div>
@@ -474,7 +467,7 @@ img{display:block;max-width:100%}
     <div class="pin sage"></div>
     <div class="biz-top">
       <div class="biz-label">UX / UI Design</div>
-      <img src="hase.png" alt="Bunny logo" width="38" style="margin-top:-4px"/>
+      <img src="Material/hase-removebg-preview.png" alt="Bunny logo" width="38" style="margin-top:-4px"/>
     </div>
     <div class="biz-name">Bao Han Dam.</div>
     <div class="biz-role">UX / UI Designer</div>
@@ -486,7 +479,9 @@ img{display:block;max-width:100%}
   <!-- ⑨ Berlin poster -->
   <article class="pc pc-berlin load d1">
     <div class="pin red"></div>
-    <img class="pc-img" src="aa30d56588484b9105f7257cca40e2c1.jpg" alt="Berlin vintage travel poster"/>
+    <img class="washi washi-berlin-tr" src="Material/7702fce287285b24a80353cea13c3a00.png" alt=""/>
+    <img class="pc-img" src="Material/Bild.jpeg" alt="Berlin travel poster"/>
+    <img class="washi washi-berlin-bl" src="Material/7702fce287285b24a80353cea13c3a00.png" alt=""/>
   </article>
 
   <!-- ⑩ Zuhause sticky note -->
@@ -496,19 +491,19 @@ img{display:block;max-width:100%}
   </div>
 
   <!-- ⑪ Vietnam stamp (floating) -->
-  <img class="deco-stamp load d2" src="stamp.png" alt="Vietnam stamp"/>
+  <img class="deco-stamp load d2" src="Material/stamp.png" alt="Vietnam stamp"/>
 
   <!-- ⑫ Würzburg — flat photo card -->
   <div class="pc pc-wuerzburg load d2">
     <div class="pin blue"></div>
-    <img class="pc-img" src="wuerzburg.png" alt="Würzburg Marienberg fortress"/>
+    <img class="pc-img" src="Material/wuerzburg.png" alt="Würzburg Marienberg fortress"/>
     <div class="photo-cap">Würzburg ✦</div>
   </div>
 
   <!-- ⑬ Graduation cap -->
   <article class="pc pc-graduation load d3">
     <div class="pin blue"></div>
-    <img class="pc-img" src="6bb29a88969522c9b8a6ce8f0635f1a6.jpg" alt="Graduation cap"/>
+    <img class="pc-img" src="Material/6bb29a88969522c9b8a6ce8f0635f1a6.jpg" alt="Graduation cap"/>
     <div class="grad-text">
       <div class="grad-title">Bachelor of Science<br/>Human-Computer-Interaction</div>
       <div class="grad-sub">Universität Würzburg · 2024</div>
@@ -518,7 +513,7 @@ img{display:block;max-width:100%}
   <!-- ⑭ Saigon map -->
   <div class="pc pc-saigon load d3">
     <div class="pin"></div>
-    <img class="pc-img" src="DjvdFr4.jpg" alt="Vintage map of Saigon"/>
+    <img class="pc-img" src="Material/DjvdFr4.jpg" alt="Vintage map of Saigon"/>
     <div class="saigon-cap">Saigon ✦ origins</div>
   </div>
 
