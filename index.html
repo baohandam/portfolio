@@ -1,358 +1,633 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bao Han Dam</title>
-<meta name="description" content="UX UI Design Portfolio" />
-<meta property="og:title" content="Bao Han Dam" />
-<meta property="og:description" content="UX UI Design Portfolio" />
-<meta property="og:type" content="website" />
-
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bao Han Dam — UX/UI Designer</title>
+<meta name="description" content="UX/UI Design Portfolio of Bao Han Dam — Berlin-based designer who turns abstract ideas into products that actually work."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
 <style>
-  /* ---------- Design tokens (easy to tune to match the original) ---------- */
-  :root {
-    --bg:        #faf9f7;   /* warm near-white */
-    --surface:   #ffffff;
-    --ink:       #16151a;   /* near-black text */
-    --ink-soft:  #5a5862;   /* muted text */
-    --line:      #e7e4df;   /* hairlines */
-    --accent:    #4b40e0;   /* link / button accent — change to taste */
-    --accent-ink:#ffffff;
-    --radius:    18px;
-    --maxw:      1120px;
-    --ease:      cubic-bezier(.22,.61,.36,1);
-  }
+:root {
+  --bg:       #F5F0E8;
+  --surface:  #FFFCF7;
+  --ink:      #3D3028;
+  --ink-mid:  #6A5D52;
+  --ink-soft: #9A8A7E;
+  --forest:   #3A5040;
+  --forest-lt:#EDF4EF;
+  --caramel:  #9B7B5A;
+  --sage:     #7A9E88;
+  --dusty-blue:#6A8AA8;
+  --brick:    #8A3A30;
+  --mustard:  #C8A040;
+  --line:     #E5DDD4;
+  --ease:     cubic-bezier(.22,.61,.36,1);
+  --spring:   cubic-bezier(.34,1.3,.64,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none}
+a{color:inherit}
+img{display:block;max-width:100%}
+.wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 32px}
 
-  * { box-sizing: border-box; }
+/* CURSOR */
+#cur{width:10px;height:10px;background:var(--forest);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s}
+#cur.big{width:44px;height:44px;background:rgba(58,80,64,.12)}
+#cur-ring{width:36px;height:36px;border:1.5px solid var(--sage);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5}
 
-  html { scroll-behavior: smooth; }
+/* NAV */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .4s,backdrop-filter .4s}
+.nav.scrolled{background:rgba(245,240,232,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:20px 32px}
+.brand{font-family:"DM Serif Display",serif;font-size:20px;text-decoration:none;letter-spacing:-.01em;color:var(--ink)}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{text-decoration:none;font-size:15px;color:var(--ink-mid);position:relative;transition:color .2s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-3px;width:100%;height:1.5px;background:var(--sage);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{transform:scaleX(1)}
+/* Fixed button: forest green, white text, strong contrast */
+.nav-cta{font-size:14px;font-weight:500;text-decoration:none;padding:10px 22px;border-radius:999px;background:var(--forest);color:#fff;border:none;transition:background .2s,transform .2s var(--spring)}
+.nav-cta:hover{background:#2A3C30;transform:scale(1.04)}
 
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: "Inter", system-ui, sans-serif;
-    font-size: 18px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
+/* ══ BOARD FRAME (photorealistic pine wood) ══ */
+.board-frame{
+  padding:26px;
+  /* Layered grain: fine high-freq grain on top of coarser horizontal bands */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='wf'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.9' numOctaves='8' seed='12' result='grain'/%3E%3CfeColorMatrix type='matrix' values='0.42 0.1 0.05 0 0.52 0 0.35 0.08 0 0.32 0 0.1 0.3 0 0.06 0 0 0 1 0' in='grain'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23wf)'/%3E%3C/svg%3E");
+  background-size:400px 400px;
+  box-shadow:0 14px 48px rgba(0,0,0,.32),inset 0 0 0 1px rgba(0,0,0,.18);
+}
 
-  h1, h2, h3 {
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin: 0;
-  }
+/* ══ CORK BOARD — real photo texture ══ */
+.board{
+  position:relative;
+  min-height:calc(100svh - 52px);
+  overflow:hidden;
+  background-image:url('3ec1c96b8af7119bf316994e0cbbaaed.jpg');
+  background-size:cover;
+  background-position:center;
+}
+/* Cork inner shadow / vignette — frame casts shadow onto cork */
+.board::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    linear-gradient(to right, rgba(0,0,0,.18) 0%, transparent 6%, transparent 94%, rgba(0,0,0,.18) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,.18) 0%, transparent 5%, transparent 95%, rgba(0,0,0,.18) 100%);
+}
 
-  a { color: inherit; }
+/* PUSH PIN — plastic ball with specular highlight and cast shadow on paper */
+.pin{
+  position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  width:15px;height:15px;
+  background:radial-gradient(circle at 35% 32%,#F0A888 0%,#C86040 45%,#8A3020 100%);
+  border-radius:50%;
+  box-shadow:
+    0 2px 4px rgba(0,0,0,.45),       /* pin casts shadow on card */
+    0 4px 10px rgba(0,0,0,.25),       /* soft ambient */
+    inset 0 1px 2px rgba(255,255,255,.35); /* specular highlight */
+  z-index:5;
+}
+/* Tiny white specular dot */
+.pin::after{content:"";position:absolute;top:3px;left:4px;width:4px;height:3px;border-radius:50%;background:rgba(255,255,255,.55)}
+.pin.sage{background:radial-gradient(circle at 35% 32%,#A0DDB8 0%,#4AA070 45%,#266040 100%)}
+.pin.blue{background:radial-gradient(circle at 35% 32%,#A0C8E8 0%,#4A80B8 45%,#2A5080 100%)}
+.pin.gold{background:radial-gradient(circle at 35% 32%,#F0DC90 0%,#C8A028 45%,#906800 100%)}
+.pin.brick{background:radial-gradient(circle at 35% 32%,#E0A090 0%,#A04030 45%,#6A1810 100%)}
+.pin.sage{background:radial-gradient(circle at 38% 38%,#8ACCA0,#3A8A60)}
+.pin.blue{background:radial-gradient(circle at 38% 38%,#88AACE,#3A6A9A)}
+.pin.gold{background:radial-gradient(circle at 38% 38%,#EDD080,#B89028)}
+.pin.brick{background:radial-gradient(circle at 38% 38%,#D08878,#8A3A30)}
 
-  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+/* BASE CARD — photorealistic paper on cork */
+.pc{
+  position:absolute;border-radius:2px;
+  /* Layered shadow: tight dark edge + wide soft ambient */
+  box-shadow:
+    0 1px 1px rgba(0,0,0,.15),
+    1px 3px 5px rgba(0,0,0,.18),
+    3px 8px 18px rgba(0,0,0,.16),
+    6px 16px 36px rgba(0,0,0,.10);
+  transition:transform .3s var(--spring),box-shadow .3s;
+  /* Paper base + very subtle fiber grain */
+  background-color:#FEFCF8;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='pf'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix type='matrix' values='0.04 0 0 0 0.95 0 0.04 0 0 0.93 0 0 0.04 0 0.9 0 0 0 1 0' in='n'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23pf)'/%3E%3C/svg%3E");
+  background-size:200px 200px;
+}
+.pc:hover{
+  box-shadow:
+    0 1px 2px rgba(0,0,0,.18),
+    2px 6px 12px rgba(0,0,0,.2),
+    6px 16px 36px rgba(0,0,0,.18),
+    10px 28px 56px rgba(0,0,0,.12);
+}
 
-  /* ---------- Navigation ---------- */
-  .nav {
-    position: fixed; inset: 0 0 auto 0; z-index: 50;
-    display: flex; align-items: center; justify-content: center;
-    transition: background .3s var(--ease), box-shadow .3s var(--ease);
-  }
-  .nav.scrolled {
-    background: rgba(250,249,247,.8);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 1px 0 var(--line);
-  }
-  .nav-inner {
-    width: 100%; max-width: var(--maxw);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 24px;
-  }
-  .brand {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700; letter-spacing: .04em;
-    text-decoration: none; font-size: 15px;
-  }
-  .nav-links { display: flex; gap: 28px; }
-  .nav-links a {
-    text-decoration: none; font-size: 15px; color: var(--ink-soft);
-    position: relative; transition: color .2s var(--ease);
-  }
-  .nav-links a::after {
-    content: ""; position: absolute; left: 0; bottom: -4px;
-    width: 100%; height: 1px; background: var(--ink);
-    transform: scaleX(0); transform-origin: left; transition: transform .25s var(--ease);
-  }
-  .nav-links a:hover { color: var(--ink); }
-  .nav-links a:hover::after { transform: scaleX(1); }
+/* ① MAIN POSTCARD */
+.pc-main{
+  width:42%;top:13%;left:28%;
+  transform:rotate(-1.3deg);
+  padding:32px 36px 36px;
+  background:#FFFDF8;
+  z-index:2;
+}
+.pc-main::after{content:"";position:absolute;bottom:0;left:0;right:0;height:35%;background:repeating-linear-gradient(transparent,transparent 23px,rgba(170,145,115,.16) 23px,rgba(170,145,115,.16) 24px);pointer-events:none;border-radius:0 0 3px 3px}
+.pc-main:hover{transform:rotate(-.4deg) translateY(-6px);box-shadow:5px 12px 28px rgba(0,0,0,.22)}
 
-  /* ---------- Hero ---------- */
-  .hero {
-    min-height: 92vh;
-    display: flex; flex-direction: column; justify-content: center;
-    padding-top: 120px; padding-bottom: 80px;
-  }
-  .hero h1 {
-    font-size: clamp(48px, 9vw, 112px);
-    font-weight: 600;
-  }
-  .hero .tagline {
-    font-size: clamp(20px, 2.6vw, 30px);
-    color: var(--ink-soft);
-    max-width: 22ch;
-    margin: 28px 0 40px;
-    line-height: 1.35;
-  }
-  .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:16px}
+.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--sage);animation:blink 2.2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-headline{font-family:"DM Serif Display",serif;font-size:clamp(32px,4.2vw,62px);line-height:.97;letter-spacing:-.022em;color:var(--ink);position:relative;z-index:1}
+.hero-headline em{font-style:italic;color:var(--caramel);display:inline-block;animation:tilt 7s ease-in-out infinite}
+@keyframes tilt{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(.5deg)}}
+.hero-divider{width:44px;height:2px;background:var(--line);margin:18px 0}
+.hero-desc{font-size:14px;color:var(--ink-mid);max-width:44ch;line-height:1.6;margin-bottom:22px;position:relative;z-index:1}
+.hero-desc strong{color:var(--ink);font-weight:500}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1}
 
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: "Space Grotesk", sans-serif; font-weight: 500;
-    font-size: 16px; text-decoration: none;
-    padding: 14px 24px; border-radius: 999px;
-    transition: transform .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
-  }
-  .btn-primary { background: var(--ink); color: var(--bg); }
-  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
-  .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
-  .btn-ghost:hover { border-color: var(--ink); transform: translateY(-2px); }
+/* ② BERLIN POSTCARD */
+.pc-berlin{
+  width:196px;top:8%;left:3%;
+  transform:rotate(-2.8deg);
+  padding:0;overflow:hidden;
+  z-index:1;
+}
+.pc-berlin:hover{transform:rotate(-1.2deg) translateY(-5px);box-shadow:5px 12px 28px rgba(0,0,0,.25)}
+.pc-berlin svg{display:block;width:100%}
 
-  /* ---------- Section headers ---------- */
-  .section { padding: 80px 0; }
-  .eyebrow {
-    font-family: "Space Grotesk", sans-serif;
-    text-transform: uppercase; letter-spacing: .18em;
-    font-size: 12px; color: var(--ink-soft); margin-bottom: 14px;
-  }
-  .section-title { font-size: clamp(30px, 5vw, 48px); font-weight: 600; }
+/* ③ ZUHAUSE NOTE (on top of Berlin card) */
+.pc-zuhause{
+  width:108px;top:52%;left:4%;
+  transform:rotate(4.5deg);
+  padding:12px 14px;
+  background:#FDEEA0;
+  z-index:3;
+  border-bottom:3px solid rgba(0,0,0,.06);
+}
+.pc-zuhause:hover{transform:rotate(2.5deg) translateY(-4px)}
+.pc-zuhause p{font-family:"DM Serif Display",serif;font-size:16px;color:#5A4010;line-height:1.3}
 
-  /* ---------- Work ---------- */
-  .projects { display: flex; flex-direction: column; gap: 96px; margin-top: 64px; }
-  .project {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
-  }
-  .project:nth-child(even) .project-media { order: 2; }
-  .project-media {
-    border-radius: var(--radius); overflow: hidden;
-    background: var(--surface); border: 1px solid var(--line);
-    aspect-ratio: 4 / 3;
-  }
-  .project-media img {
-    width: 100%; height: 100%; object-fit: cover; display: block;
-    transition: transform .6s var(--ease);
-  }
-  .project:hover .project-media img { transform: scale(1.045); }
-  .project-company { font-weight: 600; font-size: 16px; margin-bottom: 10px; }
-  .project-tags {
-    text-transform: uppercase; letter-spacing: .14em;
-    font-size: 12px; color: var(--ink-soft); margin-bottom: 16px;
-    font-family: "Space Grotesk", sans-serif;
-  }
-  .project-name { font-size: clamp(24px, 3vw, 34px); font-weight: 500; margin-bottom: 22px; }
-  .see-more {
-    display: inline-flex; align-items: center; gap: 8px;
-    text-decoration: none; font-family: "Space Grotesk", sans-serif;
-    font-weight: 500; font-size: 16px;
-  }
-  .see-more .arrow { transition: transform .25s var(--ease); }
-  .see-more:hover .arrow { transform: translateX(5px); }
+/* ④ GRADUATION CARD */
+.pc-graduation{
+  width:204px;top:8%;right:3%;
+  transform:rotate(2.4deg);
+  padding:0;overflow:hidden;
+  z-index:2;
+}
+.pc-graduation:hover{transform:rotate(1deg) translateY(-5px);box-shadow:5px 12px 28px rgba(0,0,0,.22)}
+.grad-gingham{
+  /* Blue gingham pattern */
+  background-color:#8AAFC5;
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 13px,rgba(255,255,255,.55) 13px,rgba(255,255,255,.55) 26px),
+    repeating-linear-gradient(90deg,transparent,transparent 13px,rgba(255,255,255,.55) 13px,rgba(255,255,255,.55) 26px);
+  padding:20px;display:flex;align-items:center;justify-content:center;
+  aspect-ratio:1/.9;
+}
+.grad-text{padding:16px 18px 20px;background:#FFFDF8}
+.grad-title{font-family:"DM Serif Display",serif;font-size:13px;color:var(--ink);line-height:1.3;margin-bottom:4px}
+.grad-sub{font-size:11px;color:var(--ink-soft)}
 
-  /* ---------- About ---------- */
-  .about { border-top: 1px solid var(--line); }
-  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 64px; align-items: start; }
-  .about h2 { font-size: clamp(36px, 6vw, 64px); font-weight: 600; }
-  .about .role { font-size: clamp(20px, 2.4vw, 26px); color: var(--ink-soft); margin: 16px 0 32px; }
-  .about p { color: var(--ink-soft); margin: 0 0 22px; max-width: 60ch; }
-  .about-photo {
-    border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line);
-    position: sticky; top: 110px;
-  }
-  .about-photo img { width: 100%; display: block; }
-  .about-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 12px; }
+/* ⑤ BUSINESS CARD */
+.pc-business{
+  width:264px;bottom:9%;right:3%;
+  transform:rotate(-1.6deg);
+  padding:0;overflow:hidden;
+  z-index:2;
+  background:#F8F5EE;
+  border-radius:6px;
+}
+.pc-business:hover{transform:rotate(-.3deg) translateY(-5px);box-shadow:6px 14px 32px rgba(0,0,0,.22)}
+.biz-top{padding:16px 20px 10px;display:flex;justify-content:space-between;align-items:flex-start}
+.biz-label{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.biz-name{font-family:"DM Serif Display",serif;font-size:28px;font-weight:400;line-height:1;color:var(--ink);padding:0 20px 4px}
+.biz-role{font-size:11px;color:var(--ink-mid);padding:0 20px 14px;border-bottom:1px solid var(--line)}
+.biz-bottom{padding:10px 20px 14px;display:flex;justify-content:space-between;align-items:center}
+.biz-contact{font-size:10px;color:var(--ink-soft);line-height:1.7}
 
-  /* ---------- Footer ---------- */
-  .footer {
-    border-top: 1px solid var(--line);
-    padding: 40px 0; color: var(--ink-soft); font-size: 14px;
-    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
-  }
+/* ⑥ SKILLS NOTE */
+.pc-skills{
+  width:152px;top:58%;left:22%;
+  transform:rotate(3.2deg);
+  padding:16px 18px 18px;
+  background:#EEF6EC;
+  z-index:2;
+}
+.pc-skills:hover{transform:rotate(1.5deg) translateY(-4px)}
+.pc-label{font-family:"DM Serif Display",serif;font-size:13px;color:var(--ink);margin-bottom:10px}
+.pc-label::after{content:"";display:block;width:100%;height:1px;background:rgba(0,0,0,.1);margin-top:6px}
+.skills-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.skills-list li{font-size:11.5px;color:var(--ink-mid);display:flex;align-items:center;gap:6px}
+.skills-list li::before{content:"✦";font-size:8px;color:var(--sage);flex-shrink:0}
 
-  /* ---------- Reveal animation ---------- */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-  .reveal.in { opacity: 1; transform: none; }
+/* ⑦ AVAILABILITY STICKER */
+.sticker-avail{
+  position:absolute;top:11%;left:22.5%;
+  width:88px;height:88px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;font-size:10px;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;
+  color:#3A4A20;padding:12px;line-height:1.35;
+  /* star/gingham pattern yellow */
+  background-color:#EDD96A;
+  background-image:
+    radial-gradient(circle,rgba(255,255,255,.2) 1.5px,transparent 1.5px);
+  background-size:8px 8px;
+  transform:rotate(-6deg);
+  box-shadow:2px 4px 10px rgba(0,0,0,.2);
+  animation:floatbadge 5s ease-in-out infinite;
+  z-index:3;
+}
+@keyframes floatbadge{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(-4.5deg) translateY(-3px)}}
 
-  /* Hero load stagger */
-  .load { opacity: 0; transform: translateY(28px); animation: rise .9s var(--ease) forwards; }
-  .load.d1 { animation-delay: .05s; }
-  .load.d2 { animation-delay: .18s; }
-  .load.d3 { animation-delay: .32s; }
-  @keyframes rise { to { opacity: 1; transform: none; } }
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:"DM Sans",sans-serif;font-weight:500;font-size:14px;text-decoration:none;padding:11px 22px;border-radius:999px;transition:transform .22s var(--spring),background .2s,color .2s,border-color .2s;white-space:nowrap}
+.btn-primary{background:var(--forest);color:#fff}
+.btn-primary:hover{background:#2A3C30;transform:translateY(-2px) scale(1.03)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid rgba(61,48,40,.3)}
+.btn-ghost:hover{border-color:var(--ink);transform:translateY(-2px) scale(1.03)}
 
-  /* ---------- Responsive ---------- */
-  @media (max-width: 820px) {
-    .nav-links { gap: 18px; }
-    .project { grid-template-columns: 1fr; gap: 24px; }
-    .project:nth-child(even) .project-media { order: 0; }
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
-    .about-photo { position: static; max-width: 380px; }
-    .hero { min-height: 88vh; }
-  }
-  @media (max-width: 520px) {
-    .brand { font-size: 13px; }
-    .nav-links a { font-size: 14px; }
-  }
+/* MARQUEE */
+.marquee-wrap{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0;overflow:hidden;background:var(--bg)}
+.marquee-track{display:flex;width:max-content;animation:slide 22s linear infinite}
+.marquee-track:hover{animation-play-state:paused}
+.m-item{display:flex;align-items:center;gap:22px;padding:0 30px;font-family:"DM Serif Display",serif;font-size:21px;white-space:nowrap;color:var(--ink-mid)}
+.m-item .star{color:var(--caramel);font-size:13px}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-  /* ---------- Accessibility ---------- */
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .reveal, .load { transition: none; animation: none; opacity: 1; transform: none; }
-    .project-media img { transition: none; }
-  }
+/* SECTIONS */
+.section{padding:96px 0}
+.eyebrow{font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
+.section-title{font-family:"DM Serif Display",serif;font-size:clamp(34px,5vw,54px);font-weight:400}
+
+/* WORK */
+.work-header{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-bottom:60px}
+.work-count{font-size:14px;color:var(--ink-soft);align-self:flex-start;margin-top:6px}
+.projects-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+
+.card{background:var(--surface);border-radius:16px;overflow:hidden;border:1px solid var(--line);text-decoration:none;color:inherit;display:flex;flex-direction:column;opacity:0;transform:translateY(36px);transition:opacity .6s var(--ease),transform .6s var(--ease),box-shadow .35s}
+.card.in{opacity:1;transform:none}
+.card.in:hover{transform:translateY(-6px);box-shadow:0 18px 48px rgba(61,48,40,.09)}
+.card-1{grid-column:span 7}
+.card-2{grid-column:span 5}
+.card-3{grid-column:span 12}
+
+.card-thumb{overflow:hidden;flex-shrink:0}
+.card-1 .card-thumb{aspect-ratio:16/10}
+.card-2 .card-thumb{aspect-ratio:4/3}
+.card-3 .card-thumb{aspect-ratio:21/8}
+.card-thumb-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:transform .6s var(--ease)}
+.card.in:hover .card-thumb-inner{transform:scale(1.04)}
+
+.ph-vehiview{background:linear-gradient(135deg,#1E2A40 0%,#2E4480 55%,#5070A8 100%)}
+.ph-gathered{background:linear-gradient(135deg,#2D1A40 0%,#6040A0 55%,#9870CC 100%)}
+.ph-cafe{background:linear-gradient(135deg,#3A2010 0%,#7A4A28 55%,#B87850 100%)}
+.ph-name{font-family:"DM Serif Display",serif;font-size:clamp(22px,3vw,44px);font-weight:400;color:rgba(255,255,255,.2);letter-spacing:-.02em;user-select:none}
+
+.card-body{padding:26px 28px 30px;flex:1;display:flex;flex-direction:column;gap:6px}
+.card-label{font-size:12px;font-weight:500;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.1em}
+.card-name{font-family:"DM Serif Display",serif;font-size:clamp(16px,1.8vw,22px);font-weight:400;line-height:1.2}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:14px}
+.tag{font-size:11px;font-weight:500;padding:4px 11px;border-radius:999px;background:var(--bg);color:var(--ink-mid);border:1px solid var(--line)}
+.card-arrow{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;margin-top:14px;color:var(--forest);opacity:0;transform:translateX(-6px);transition:opacity .22s,transform .22s}
+.card.in:hover .card-arrow{opacity:1;transform:none}
+
+/* VALUES */
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:52px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.value-item{padding:36px 32px;border-right:1px solid var(--line);transition:background .25s}
+.value-item:last-child{border-right:none}
+.value-item:hover{background:var(--forest-lt)}
+.value-num{font-family:"DM Serif Display",serif;font-size:38px;color:var(--forest);line-height:1;margin-bottom:18px}
+.value-title{font-family:"DM Serif Display",serif;font-size:21px;margin-bottom:10px}
+.value-desc{font-size:14px;color:var(--ink-mid);line-height:1.6}
+
+/* ABOUT */
+.about{background:#2E2820;color:var(--bg)}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.about .eyebrow{color:rgba(255,255,255,.35)}
+.about .section-title{color:#fff}
+.about-body{padding-top:56px}
+.about-body p{font-size:16px;color:rgba(255,255,255,.62);line-height:1.72;margin-bottom:18px}
+.about-body p strong{color:#fff;font-weight:500}
+.about-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.about-cta .btn-primary{background:var(--sage)}
+.about-cta .btn-primary:hover{background:#fff;color:var(--ink)}
+.about-cta .btn-ghost{border-color:rgba(255,255,255,.22);color:#fff}
+.about-cta .btn-ghost:hover{border-color:#fff}
+.about-visual{padding-top:96px;position:sticky;top:110px}
+.about-photo{border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);margin-bottom:16px}
+.about-photo img{width:100%}
+.about-chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:12px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.1)}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--line);padding:38px 0}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--ink-soft)}
+.footer-links{display:flex;gap:22px}
+.footer-links a{text-decoration:none;color:var(--ink-soft);transition:color .2s}
+.footer-links a:hover{color:var(--ink)}
+.footer-heart{color:var(--brick)}
+
+/* REVEALS */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.load{opacity:0;transform:translateY(28px);animation:rise .9s var(--ease) forwards}
+.load.d1{animation-delay:.06s}.load.d2{animation-delay:.18s}.load.d3{animation-delay:.32s}.load.d4{animation-delay:.48s}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .card-1,.card-2{grid-column:span 6}
+  .card-3{grid-column:span 12}
+}
+@media(max-width:820px){
+  .wrap{padding:0 18px}
+  .nav-inner{padding:16px 18px}
+  .board-frame{padding:14px}
+  .board{min-height:auto;padding:80px 16px 36px;display:flex;flex-direction:column;align-items:center;gap:20px}
+  .pc,.sticker-avail{position:static;transform:none !important;width:100%;max-width:460px}
+  .pc:hover{transform:none !important;box-shadow:3px 5px 16px rgba(0,0,0,.2)}
+  .pc-main::after,.pin{display:none}
+  .sticker-avail{border-radius:999px;height:auto;width:auto;padding:10px 18px;animation:none}
+  .pc-berlin{width:100%;max-width:300px}
+  .about-inner{grid-template-columns:1fr;gap:36px}
+  .about-visual{position:static;padding-top:0}
+  .values-grid{grid-template-columns:1fr}
+  .value-item{border-right:none;border-bottom:1px solid var(--line)}
+  .value-item:last-child{border-bottom:none}
+  .section{padding:72px 0}
+  #cur,#cur-ring{display:none}
+  body{cursor:auto}
+  .card-1,.card-2,.card-3{grid-column:span 12}
+  .card-3 .card-thumb{aspect-ratio:4/3}
+}
+@media(max-width:520px){
+  .nav-links a:not(.nav-cta){display:none}
+  .hero-headline{font-size:clamp(30px,10vw,50px)}
+}
+:focus-visible{outline:2px solid var(--forest);outline-offset:3px;border-radius:4px}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal,.load,.card,.hero-headline em,.sticker-avail{transition:none;animation:none;opacity:1;transform:none}
+  .marquee-track{animation:none}
+}
 </style>
 </head>
 <body>
+<div id="cur"></div>
+<div id="cur-ring"></div>
 
-  <!-- NAV -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="#top" class="brand">BAO HAN DAM</a>
-      <div class="nav-links">
-        <a href="#work">Portfolio</a>
-        <a href="#about-me">About me</a>
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">Bao Han Dam</a>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="mailto:baohandam@outlook.de" class="nav-cta">Say hello ✦</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ CORKBOARD ══ -->
+<div class="board-frame" id="top">
+<div class="board">
+
+  <!-- ① Main postcard -->
+  <article class="pc pc-main load d2">
+    <div class="pin"></div>
+    <div class="hero-eyebrow"><span class="dot"></span>UX / UI Designer — Berlin</div>
+    <h1 class="hero-headline">I turn the<br/><em>abstract</em><br/>into the real.</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">I work with teams to understand what they actually need — not just what they say — and translate that into <strong>designs that create real value</strong>, not just pretty screens.</p>
+    <div class="hero-actions">
+      <a href="#work" class="btn btn-primary">See my work</a>
+      <a href="#about" class="btn btn-ghost">About me</a>
+    </div>
+  </article>
+
+  <!-- ② Berlin travel postcard — real image -->
+  <article class="pc pc-berlin load d1" aria-label="Berlin vintage travel poster">
+    <div class="pin brick"></div>
+    <img src="aa30d56588484b9105f7257cca40e2c1.jpg" alt="Berlin — vintage travel poster showing the U-Bahn at Burgermeister" loading="lazy"/>
+  </article>
+
+  <!-- ③ Zuhause sticky note (overlaps Berlin card) -->
+  <div class="pc pc-zuhause load d1">
+    <div class="pin gold"></div>
+    <p>Zuhause ❤</p>
+  </div>
+
+  <!-- ④ Graduation cap card — real image -->
+  <article class="pc pc-graduation load d2">
+    <div class="pin blue"></div>
+    <img src="6bb29a88969522c9b8a6ce8f0635f1a6.jpg" alt="Graduation cap illustration on blue gingham" loading="lazy"/>
+    <div class="grad-text">
+      <div class="grad-title">Bachelor of Science<br/>Human-Computer-Interaction</div>
+      <div class="grad-sub">Universität Würzburg · 2024</div>
+    </div>
+  </article>
+
+  <!-- ⑤ Business card -->
+  <article class="pc pc-business load d3">
+    <div class="pin sage"></div>
+    <div class="biz-top">
+      <div class="biz-label">UX / UI Design · Portfolio</div>
+      <!-- Bunny logo (Miffy-style line art) -->
+      <svg viewBox="0 0 58 72" width="44" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="chalk">
+            <feTurbulence type="turbulence" baseFrequency="0.04" numOctaves="3" result="n" seed="9"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+        <g filter="url(#chalk)" stroke="#3D3028" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Left ear -->
+          <ellipse cx="20" cy="12" rx="7" ry="16" transform="rotate(-8 20 12)" stroke-width="2.2" fill="#FFFDF8"/>
+          <!-- Right ear -->
+          <ellipse cx="38" cy="11" rx="7" ry="16" transform="rotate(8 38 11)" stroke-width="2.2" fill="#FFFDF8"/>
+          <!-- Head -->
+          <circle cx="29" cy="34" r="20" stroke-width="2.5" fill="#FFFDF8"/>
+          <!-- Body -->
+          <ellipse cx="29" cy="58" rx="16" ry="11" stroke-width="2.2" fill="#FFFDF8"/>
+          <!-- Eyes -->
+          <circle cx="22" cy="33" r="2.8" fill="#3D3028" stroke="none"/>
+          <circle cx="36" cy="33" r="2.8" fill="#3D3028" stroke="none"/>
+          <!-- Tiny feet -->
+          <ellipse cx="20" cy="68" rx="7" ry="4" stroke-width="1.8" fill="#FFFDF8"/>
+          <ellipse cx="38" cy="68" rx="7" ry="4" stroke-width="1.8" fill="#FFFDF8"/>
+        </g>
+      </svg>
+    </div>
+    <div class="biz-name">Bao Han Dam.</div>
+    <div class="biz-role">UX / UI Designer</div>
+    <div class="biz-bottom">
+      <div class="biz-contact">
+        baohandam@outlook.de<br/>
+        Berlin, Germany
+      </div>
+      <div style="font-size:10px;color:var(--ink-soft);text-align:right;line-height:1.6">
+        LinkedIn<br/>baohandam.framer.website
       </div>
     </div>
-  </nav>
+  </article>
 
-  <!-- HERO -->
-  <header class="hero wrap" id="top">
-    <h1 class="load d1">Hi, I'm Bao!</h1>
-    <p class="tagline load d2">I love to create.<br />And I want to make your life easier.</p>
-    <div class="hero-cta load d3">
-      <a href="#work" class="btn btn-primary">My work</a>
-      <a href="#about-me" class="btn btn-ghost">About me</a>
+  <!-- ⑥ Skills note -->
+  <article class="pc pc-skills load d3">
+    <div class="pin sage"></div>
+    <div class="pc-label">What I do</div>
+    <ul class="skills-list">
+      <li>UI Design</li>
+      <li>UX Research</li>
+      <li>Wireframing</li>
+      <li>Prototyping</li>
+      <li>Figma</li>
+      <li>Design Systems</li>
+      <li>Usability Testing</li>
+    </ul>
+  </article>
+
+  <!-- ⑦ Availability sticker -->
+  <div class="sticker-avail load d1">Available<br/>for work ✦</div>
+
+</div><!-- .board -->
+</div><!-- .board-frame -->
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="m-item">UX Research <span class="star">✦</span></div>
+    <div class="m-item">UI Design <span class="star">✦</span></div>
+    <div class="m-item">Wireframing <span class="star">✦</span></div>
+    <div class="m-item">Prototyping <span class="star">✦</span></div>
+    <div class="m-item">Usability Testing <span class="star">✦</span></div>
+    <div class="m-item">Design Systems <span class="star">✦</span></div>
+    <div class="m-item">Figma <span class="star">✦</span></div>
+    <div class="m-item">User Flows <span class="star">✦</span></div>
+    <div class="m-item">UX Research <span class="star">✦</span></div>
+    <div class="m-item">UI Design <span class="star">✦</span></div>
+    <div class="m-item">Wireframing <span class="star">✦</span></div>
+    <div class="m-item">Prototyping <span class="star">✦</span></div>
+    <div class="m-item">Usability Testing <span class="star">✦</span></div>
+    <div class="m-item">Design Systems <span class="star">✦</span></div>
+    <div class="m-item">Figma <span class="star">✦</span></div>
+    <div class="m-item">User Flows <span class="star">✦</span></div>
+  </div>
+</div>
+
+<!-- WORK -->
+<section class="section" id="work">
+  <div class="wrap">
+    <div class="work-header reveal">
+      <div><div class="eyebrow">Selected work</div><h2 class="section-title">Projects</h2></div>
+      <span class="work-count">03 projects</span>
     </div>
-  </header>
-
-  <!-- WORK -->
-  <section class="section wrap" id="work">
-    <div class="reveal">
-      <div class="eyebrow">Selected work</div>
-      <h2 class="section-title">Portfolio</h2>
+    <div class="projects-grid">
+      <a href="#" class="card card-1">
+        <div class="card-thumb"><div class="card-thumb-inner ph-vehiview"><span class="ph-name">Vehiview</span></div></div>
+        <div class="card-body">
+          <div class="card-label">Vehicle Platform · Case Study</div>
+          <h3 class="card-name">Vehiview — designing a vehicle inspection experience from scratch</h3>
+          <div class="card-tags"><span class="tag">UX Research</span><span class="tag">UI Design</span><span class="tag">Prototyping</span></div>
+          <span class="card-arrow">View case study →</span>
+        </div>
+      </a>
+      <a href="#" class="card card-2">
+        <div class="card-thumb"><div class="card-thumb-inner ph-gathered"><span class="ph-name">Gathered</span></div></div>
+        <div class="card-body">
+          <div class="card-label">Social App · Case Study</div>
+          <h3 class="card-name">Gathered — making it easy to organise events with the people you love</h3>
+          <div class="card-tags"><span class="tag">Mobile App</span><span class="tag">Product Design</span><span class="tag">User Research</span></div>
+          <span class="card-arrow">View case study →</span>
+        </div>
+      </a>
+      <a href="#" class="card card-3">
+        <div class="card-thumb"><div class="card-thumb-inner ph-cafe"><span class="ph-name">Café reservations</span></div></div>
+        <div class="card-body">
+          <div class="card-label">Personal Project · End-to-End</div>
+          <h3 class="card-name">Table booking system for my future café — from abstract idea to working interface</h3>
+          <div class="card-tags"><span class="tag">End-to-End Design</span><span class="tag">Service Design</span><span class="tag">UI Design</span></div>
+          <span class="card-arrow">View case study →</span>
+        </div>
+      </a>
     </div>
+  </div>
+</section>
 
-    <div class="projects">
-
-      <article class="project reveal">
-        <div class="project-media">
-          <img src="https://framerusercontent.com/images/HlfYoB4PGbdQYWDUKzXGbZyXO0.png" alt="AI Chatbot project preview" loading="lazy" />
-        </div>
-        <div class="project-body">
-          <div class="project-company">Lighthouse Germany</div>
-          <div class="project-tags">UI Design</div>
-          <h3 class="project-name">AI Chatbot — “Talk to your documents”</h3>
-          <a href="#" class="see-more">See more <span class="arrow">→</span></a>
-        </div>
-      </article>
-
-      <article class="project reveal">
-        <div class="project-media">
-          <img src="https://framerusercontent.com/images/HPDilYTy7sSVRHpwPYFpDwbPJA.png?scale-down-to=2048" alt="HoloTrain project preview" loading="lazy" />
-        </div>
-        <div class="project-body">
-          <div class="project-company">HoloTrain</div>
-          <div class="project-tags">UX Research, UI Design, Usability Testing</div>
-          <h3 class="project-name">Creating a digital product — from research to concept to prototype</h3>
-          <a href="#" class="see-more">See more <span class="arrow">→</span></a>
-        </div>
-      </article>
-
-      <article class="project reveal">
-        <div class="project-media">
-          <img src="https://framerusercontent.com/images/Bo1v4z5h3UdcZ3iVEamTGaMTtw.png" alt="TeamViewer UX project preview" loading="lazy" />
-        </div>
-        <div class="project-body">
-          <div class="project-company">TeamViewer</div>
-          <div class="project-tags">UX Research</div>
-          <h3 class="project-name">Assessment of the User Focus Program website</h3>
-          <a href="#" class="see-more">See more <span class="arrow">→</span></a>
-        </div>
-      </article>
-
-      <article class="project reveal">
-        <div class="project-media">
-          <img src="https://framerusercontent.com/images/zEtXagQePzbfYW6Zv1aGMKDhyJc.png" alt="TeamViewer UI redesign preview" loading="lazy" />
-        </div>
-        <div class="project-body">
-          <div class="project-company">TeamViewer</div>
-          <div class="project-tags">UI Rework</div>
-          <h3 class="project-name">Overall redesign of the applications' user interface</h3>
-          <a href="#" class="see-more">See more <span class="arrow">→</span></a>
-        </div>
-      </article>
-
-      <article class="project reveal">
-        <div class="project-media">
-          <img src="https://framerusercontent.com/images/X1StbVPrSDhIKwW9bj9giSlA.png" alt="XR Hub Bavaria digital twin preview" loading="lazy" />
-        </div>
-        <div class="project-body">
-          <div class="project-company">XR Hub Bavaria</div>
-          <div class="project-tags">VR Development</div>
-          <h3 class="project-name">Creating a Digital Twin in VR with Unity</h3>
-          <a href="#" class="see-more">See more <span class="arrow">→</span></a>
-        </div>
-      </article>
-
+<!-- VALUES -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal"><div class="eyebrow">How I work</div><h2 class="section-title">What drives my design</h2></div>
+    <div class="values-grid reveal">
+      <div class="value-item"><div class="value-num">01</div><h3 class="value-title">Understand before designing</h3><p class="value-desc">I dig into the real problem first. The best design decisions come from truly understanding context — users, business goals, and constraints.</p></div>
+      <div class="value-item"><div class="value-num">02</div><h3 class="value-title">Abstract → Concrete</h3><p class="value-desc">PMs and stakeholders often have vague visions. I ask the right questions and shape fuzzy ideas into clear, testable designs and flows.</p></div>
+      <div class="value-item"><div class="value-num">03</div><h3 class="value-title">Value over aesthetics</h3><p class="value-desc">Pretty is a bonus. I'm focused on building products that actually work — for real people, in real situations, accessible to everyone.</p></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ABOUT -->
-  <section class="section about" id="about-me">
-    <div class="wrap">
-      <div class="about-grid">
+<!-- ABOUT -->
+<section class="section about" id="about">
+  <div class="wrap">
+    <div class="about-inner">
+      <div class="about-body">
+        <div class="eyebrow">About me</div>
+        <h2 class="section-title reveal">Hi, I'm Bao!</h2>
         <div class="reveal">
-          <h2>Hi, I'm Bao!</h2>
-          <p class="role">I'm an aspiring UX/UI Designer.</p>
-          <p>Although I'm just starting out, I already bring nearly two years of experience in both the tech industry and consulting. I adapt my skills to meet the needs of any client, delivering high-quality, tailored solutions with fresh ideas and a versatile approach to ensure every project's success.</p>
-          <p>I'm based in Berlin but originally from a small town near Würzburg, Bavaria, where I earned my Bachelor's Degree in Human-Computer Systems in March 2024. My passion for creativity started in childhood, evolving from drawing to working with textiles, various DIY projects and exploring the musical field.</p>
-          <p>Growing up between two cultures and in a lower-income family has shaped my unique perspective on life. I deeply value empathy and kindness, and I believe that promoting inclusion and accessibility allows us all to contribute to a more just and equitable world.</p>
+          <p>I'm a <strong>UX/UI Designer based in Berlin</strong> with nearly two years of experience in tech and consulting. I have a Bachelor's in Human-Computer Systems and a genuine love for making complex things feel simple.</p>
+          <p>I grew up between two cultures and that shaped how I see things — I care deeply about <strong>empathy, inclusion, and making products that work for everyone</strong>, not just the loudest voice in the room.</p>
+          <p>When I'm not designing, I'm probably sewing something, making music, or working on a random DIY project. Creativity is just how I exist.</p>
           <div class="about-cta">
             <a href="mailto:baohandam@outlook.de" class="btn btn-primary">Write me an email</a>
-            <a href="https://framerusercontent.com/assets/vMQlVTb4wkUwamahKZElo96yvQ.pdf" class="btn btn-ghost" target="_blank" rel="noopener">Download my CV</a>
+            <a href="https://framerusercontent.com/assets/vMQlVTb4wkUwamahKZElo96yvQ.pdf" class="btn btn-ghost" target="_blank" rel="noopener">Download CV</a>
           </div>
         </div>
-        <div class="about-photo reveal">
-          <img src="https://framerusercontent.com/images/LdA6H9extWGLHpq841jsHtsi0.png" alt="Portrait of Bao Han Dam" loading="lazy" />
+      </div>
+      <div class="about-visual reveal">
+        <div class="about-photo">
+          <img src="https://framerusercontent.com/images/LdA6H9extWGLHpq841jsHtsi0.png" alt="Portrait of Bao Han Dam" loading="lazy"/>
+        </div>
+        <div class="about-chips">
+          <span class="chip">Figma</span><span class="chip">User Research</span><span class="chip">Design Systems</span><span class="chip">Prototyping</span><span class="chip">Unity / VR</span><span class="chip">Berlin-based</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer class="wrap footer">
-    <span>© <span id="year"></span> Bao Han Dam</span>
-    <a href="mailto:baohandam@outlook.de" style="text-decoration:none;">baohandam@outlook.de</a>
-  </footer>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <span>© <span id="yr"></span> Bao Han Dam — Made with <span class="footer-heart">♥</span></span>
+      <div class="footer-links">
+        <a href="mailto:baohandam@outlook.de">Email</a>
+        <a href="https://www.linkedin.com/in/baohandam" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://baohandam.framer.website/" target="_blank" rel="noopener">Framer ↗</a>
+      </div>
+    </div>
+  </div>
+</footer>
 
-  <script>
-    // Nav background on scroll
-    const nav = document.getElementById('nav');
-    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    // Scroll reveals
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-
+<script>
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function loop(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('a,button,.card,.pc').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+});
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>20),{passive:true});
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const cards=[...document.querySelectorAll('.card')];
+const cio=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){const i=cards.indexOf(x.target);setTimeout(()=>x.target.classList.add('in'),i*90);cio.unobserve(x.target)}}),{threshold:.08});
+cards.forEach(c=>cio.observe(c));
+document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
 </body>
 </html>
