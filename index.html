@@ -73,8 +73,8 @@ img{display:block;max-width:100%}
 }
 
 /* ══ PUSH PINS ══ */
-.pin{position:absolute;top:-11px;left:50%;transform:translateX(-50%);width:15px;height:15px;border-radius:50%;box-shadow:0 2px 4px rgba(0,0,0,.45),0 4px 10px rgba(0,0,0,.22),inset 0 1px 2px rgba(255,255,255,.35);z-index:5}
-.pin::after{content:"";position:absolute;top:3px;left:4px;width:4px;height:3px;border-radius:50%;background:rgba(255,255,255,.55)}
+.pin{position:absolute;top:-13px;left:50%;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;box-shadow:0 3px 6px rgba(0,0,0,.5),0 6px 14px rgba(0,0,0,.25),inset 0 1px 3px rgba(255,255,255,.4);z-index:5}
+.pin::after{content:"";position:absolute;top:4px;left:5px;width:5px;height:4px;border-radius:50%;background:rgba(255,255,255,.6)}
 .pin,.pin.red{background:radial-gradient(circle at 35% 32%,#F0A888 0%,#C86040 45%,#8A3020 100%)}
 .pin.sage{background:radial-gradient(circle at 35% 32%,#A0DDB8 0%,#4AA070 45%,#266040 100%)}
 .pin.blue{background:radial-gradient(circle at 35% 32%,#A0C8E8 0%,#4A80B8 45%,#2A5080 100%)}
@@ -103,20 +103,21 @@ img{display:block;max-width:100%}
 
 /* ══ INDIVIDUAL CARD STYLES ══ */
 
-/* ① Girl doodle */
-.pc-girl{width:100px;left:2%;top:8%;transform:rotate(-3deg);z-index:2;background:transparent;box-shadow:none}
+/* ① Girl in polaroid — upper left */
+.pc-girl{width:130px;left:2%;top:6%;transform:rotate(-3deg);z-index:2;background:transparent;box-shadow:none}
 .pc-girl:hover{transform:rotate(-1.5deg) translateY(-4px)}
-.pc-girl img{width:100%;border-radius:2px;box-shadow:2px 4px 10px rgba(0,0,0,.2)}
+.pc-girl .polaroid-photo{position:absolute;top:5.5%;left:7%;width:86%;height:71%;object-fit:cover;z-index:1}
+.pc-girl .polaroid-frame{position:relative;display:block;width:100%;z-index:2;filter:drop-shadow(2px 5px 12px rgba(0,0,0,.28))}
 
 /* ② Skills note — note.png has built-in pin */
-.pc-skills{width:21%;min-width:180px;left:2%;top:20%;transform:rotate(-0.8deg);z-index:2;background:transparent;box-shadow:none}
+.pc-skills{width:22%;min-width:185px;left:2%;top:30%;transform:rotate(-0.8deg);z-index:2;background:transparent;box-shadow:none}
 .pc-skills:hover{transform:rotate(.5deg) translateY(-4px)}
 .pc-skills .pc-img{border-radius:2px;box-shadow:2px 4px 10px rgba(0,0,0,.22),5px 12px 28px rgba(0,0,0,.14)}
-.skills-text{position:absolute;top:13%;left:8%;right:6%}
+.skills-text{position:absolute;top:12%;left:7%;right:5%}
 .skills-label{font-family:"DM Serif Display",serif;font-size:clamp(11px,1.1vw,15px);color:var(--ink);margin-bottom:8px;border-bottom:1px solid rgba(61,48,40,.15);padding-bottom:5px}
-.skills-list{list-style:none;display:flex;flex-direction:column;gap:4px}
-.skills-list li{font-size:clamp(9px,.9vw,12px);color:var(--ink-mid);display:flex;align-items:center;gap:5px}
-.skills-list li::before{content:"✦";font-size:7px;color:var(--sage);flex-shrink:0}
+.skills-list{list-style:none;display:flex;flex-direction:column;gap:5px}
+.skills-list li{font-size:clamp(9px,.9vw,12px);color:var(--ink-mid);display:flex;align-items:center;gap:6px}
+.skill-fl{width:16px;height:auto;flex-shrink:0;display:block}
 
 /* ③ KPMG flight tag */
 .pc-flight{width:155px;left:2%;bottom:22%;transform:rotate(-6deg);z-index:2;background:transparent;box-shadow:none}
@@ -218,13 +219,14 @@ img{display:block;max-width:100%}
 }
 .deco-stamp:hover{transform:rotate(-2deg) translateY(-3px)}
 
-/* ⑫ Würzburg polaroid */
-.pc-wuerzburg{width:190px;right:3%;top:41%;transform:rotate(-2deg);z-index:2;padding:0;background:transparent;box-shadow:none}
+/* ⑫ Würzburg — flat photo card (no polaroid) */
+.pc-wuerzburg{width:185px;right:3%;top:42%;transform:rotate(-2deg);z-index:2;padding:0;overflow:hidden}
 .pc-wuerzburg:hover{transform:rotate(-.5deg) translateY(-5px)}
+.pc-wuerzburg .pc-img{width:100%;display:block;object-fit:cover}
+.photo-cap{padding:7px 10px 9px;font-family:"DM Serif Display",serif;font-size:11px;color:var(--ink-mid);font-style:italic;background:#FFFDF8;text-align:center}
+
+/* Shared polaroid helpers — used by .pc-girl */
 .polaroid-wrap{position:relative;display:block}
-.polaroid-photo{position:absolute;top:5.5%;left:7%;width:86%;height:71%;object-fit:cover;z-index:1}
-.polaroid-frame{position:relative;display:block;width:100%;z-index:2;filter:drop-shadow(2px 4px 10px rgba(0,0,0,.22)) drop-shadow(5px 12px 28px rgba(0,0,0,.14))}
-.polaroid-cap{text-align:center;font-family:"DM Serif Display",serif;font-size:12px;font-style:italic;color:rgba(255,255,255,.9);margin-top:6px;text-shadow:0 1px 4px rgba(0,0,0,.4)}
 
 /* ⑬ Graduation cap card */
 .pc-graduation{width:200px;right:3%;bottom:8%;transform:rotate(1.5deg);z-index:2}
@@ -234,16 +236,11 @@ img{display:block;max-width:100%}
 .grad-title{font-family:"DM Serif Display",serif;font-size:12px;color:var(--ink);line-height:1.3;margin-bottom:3px}
 .grad-sub{font-size:10px;color:var(--ink-soft)}
 
-/* ⑭ Saigon map */
-.pc-saigon{width:170px;right:22%;bottom:7%;transform:rotate(-2.5deg);z-index:2}
+/* ⑭ Saigon map — LARGE */
+.pc-saigon{width:285px;right:21%;bottom:5%;transform:rotate(-2.5deg);z-index:3}
 .pc-saigon:hover{transform:rotate(-1deg) translateY(-4px)}
 .pc-saigon .pc-img{width:100%;display:block}
 .saigon-cap{padding:8px 10px 10px;font-family:"DM Serif Display",serif;font-size:11px;color:var(--ink-mid);font-style:italic;background:#FFFDF8;text-align:center}
-
-/* Decorative flowers */
-.deco-flowers{position:absolute;width:40px;z-index:5;pointer-events:none}
-.deco-flowers.f1{left:26%;top:7%;transform:rotate(15deg)}
-.deco-flowers.f2{right:21%;top:42%;transform:rotate(-20deg)}
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:"DM Sans",sans-serif;font-weight:500;font-size:13px;text-decoration:none;padding:10px 20px;border-radius:999px;transition:transform .22s var(--spring),background .2s,color .2s,border-color .2s;white-space:nowrap}
@@ -395,13 +392,12 @@ img{display:block;max-width:100%}
 <div class="board-frame" id="top">
 <div class="board">
 
-  <!-- Decorative flowers -->
-  <img class="deco-flowers f1 load d1" src="flowers.png" aria-hidden="true"/>
-  <img class="deco-flowers f2 load d1" src="flowers.png" aria-hidden="true"/>
-
-  <!-- ① Girl character doodle -->
-  <div class="pc pc-girl load d1">
-    <img src="c7738b2aa4477016388b23feecd2ec39.jpg" alt="Character doodle"/>
+  <!-- ① Girl character inside polaroid frame -->
+  <div class="pc pc-girl load d1" aria-label="Character illustration">
+    <div class="polaroid-wrap">
+      <img class="polaroid-photo" src="c7738b2aa4477016388b23feecd2ec39.jpg" alt="Girl character doodle"/>
+      <img class="polaroid-frame" src="pngfind.com-polaroid-frame-png-559852.png" alt=""/>
+    </div>
   </div>
 
   <!-- ② Skills note — note.png has its own pin built in -->
@@ -411,14 +407,14 @@ img{display:block;max-width:100%}
       <div class="pc-text skills-text">
         <div class="skills-label">What I do</div>
         <ul class="skills-list">
-          <li>UI Design</li>
-          <li>UX Research</li>
-          <li>Wireframing</li>
-          <li>Prototyping</li>
-          <li>Usability Testing</li>
-          <li>User Interviews</li>
-          <li>Design Systems</li>
-          <li>Requirements Engineering</li>
+          <li><img src="flowers.png" class="skill-fl" alt=""/>UI Design</li>
+          <li><img src="flowers.png" class="skill-fl" alt=""/>UX Research</li>
+          <li><img src="flowers.png" class="skill-fl" alt=""/>Wireframing</li>
+          <li><img src="flowers.png" class="skill-fl" alt=""/>Prototyping</li>
+          <li><img src="flowers.png" class="skill-fl" alt=""/>Usability Testing</li>
+          <li><img src="flowers.png" class="skill-fl" alt=""/>User Interviews</li>
+          <li><img src="flowers.png" class="skill-fl" alt=""/>Design Systems</li>
+          <li><img src="flowers.png" class="skill-fl" alt=""/>Requirements Engineering</li>
         </ul>
       </div>
     </div>
@@ -502,14 +498,11 @@ img{display:block;max-width:100%}
   <!-- ⑪ Vietnam stamp (floating) -->
   <img class="deco-stamp load d2" src="stamp.png" alt="Vietnam stamp"/>
 
-  <!-- ⑫ Würzburg polaroid -->
+  <!-- ⑫ Würzburg — flat photo card -->
   <div class="pc pc-wuerzburg load d2">
     <div class="pin blue"></div>
-    <div class="polaroid-wrap">
-      <img class="polaroid-photo" src="wuerzburg.png" alt="Würzburg"/>
-      <img class="polaroid-frame" src="pngfind.com-polaroid-frame-png-559852.png" alt=""/>
-    </div>
-    <div class="polaroid-cap">Würzburg ✦</div>
+    <img class="pc-img" src="wuerzburg.png" alt="Würzburg Marienberg fortress"/>
+    <div class="photo-cap">Würzburg ✦</div>
   </div>
 
   <!-- ⑬ Graduation cap -->
