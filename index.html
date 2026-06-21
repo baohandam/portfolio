@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bao Han Dam</title>
+<meta name="description" content="UX UI Design Portfolio" />
+<meta property="og:title" content="Bao Han Dam" />
+<meta property="og:description" content="UX UI Design Portfolio" />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  /* ---------- Design tokens (easy to tune to match the original) ---------- */
+  :root {
+    --bg:        #faf9f7;   /* warm near-white */
+    --surface:   #ffffff;
+    --ink:       #16151a;   /* near-black text */
+    --ink-soft:  #5a5862;   /* muted text */
+    --line:      #e7e4df;   /* hairlines */
+    --accent:    #4b40e0;   /* link / button accent — change to taste */
+    --accent-ink:#ffffff;
+    --radius:    18px;
+    --maxw:      1120px;
+    --ease:      cubic-bezier(.22,.61,.36,1);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  a { color: inherit; }
+
+  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Navigation ---------- */
+  .nav {
+    position: fixed; inset: 0 0 auto 0; z-index: 50;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .nav.scrolled {
+    background: rgba(250,249,247,.8);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .nav-inner {
+    width: 100%; max-width: var(--maxw);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 24px;
+  }
+  .brand {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700; letter-spacing: .04em;
+    text-decoration: none; font-size: 15px;
+  }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    text-decoration: none; font-size: 15px; color: var(--ink-soft);
+    position: relative; transition: color .2s var(--ease);
+  }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; bottom: -4px;
+    width: 100%; height: 1px; background: var(--ink);
+    transform: scaleX(0); transform-origin: left; transition: transform .25s var(--ease);
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: 92vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: 120px; padding-bottom: 80px;
+  }
+  .hero h1 {
+    font-size: clamp(48px, 9vw, 112px);
+    font-weight: 600;
+  }
+  .hero .tagline {
+    font-size: clamp(20px, 2.6vw, 30px);
+    color: var(--ink-soft);
+    max-width: 22ch;
+    margin: 28px 0 40px;
+    line-height: 1.35;
+  }
+  .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: "Space Grotesk", sans-serif; font-weight: 500;
+    font-size: 16px; text-decoration: none;
+    padding: 14px 24px; border-radius: 999px;
+    transition: transform .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
+  }
+  .btn-primary { background: var(--ink); color: var(--bg); }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .btn-ghost:hover { border-color: var(--ink); transform: translateY(-2px); }
+
+  /* ---------- Section headers ---------- */
+  .section { padding: 80px 0; }
+  .eyebrow {
+    font-family: "Space Grotesk", sans-serif;
+    text-transform: uppercase; letter-spacing: .18em;
+    font-size: 12px; color: var(--ink-soft); margin-bottom: 14px;
+  }
+  .section-title { font-size: clamp(30px, 5vw, 48px); font-weight: 600; }
+
+  /* ---------- Work ---------- */
+  .projects { display: flex; flex-direction: column; gap: 96px; margin-top: 64px; }
+  .project {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+  }
+  .project:nth-child(even) .project-media { order: 2; }
+  .project-media {
+    border-radius: var(--radius); overflow: hidden;
+    background: var(--surface); border: 1px solid var(--line);
+    aspect-ratio: 4 / 3;
+  }
+  .project-media img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform .6s var(--ease);
+  }
+  .project:hover .project-media img { transform: scale(1.045); }
+  .project-company { font-weight: 600; font-size: 16px; margin-bottom: 10px; }
+  .project-tags {
+    text-transform: uppercase; letter-spacing: .14em;
+    font-size: 12px; color: var(--ink-soft); margin-bottom: 16px;
+    font-family: "Space Grotesk", sans-serif;
+  }
+  .project-name { font-size: clamp(24px, 3vw, 34px); font-weight: 500; margin-bottom: 22px; }
+  .see-more {
+    display: inline-flex; align-items: center; gap: 8px;
+    text-decoration: none; font-family: "Space Grotesk", sans-serif;
+    font-weight: 500; font-size: 16px;
+  }
+  .see-more .arrow { transition: transform .25s var(--ease); }
+  .see-more:hover .arrow { transform: translateX(5px); }
+
+  /* ---------- About ---------- */
+  .about { border-top: 1px solid var(--line); }
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 64px; align-items: start; }
+  .about h2 { font-size: clamp(36px, 6vw, 64px); font-weight: 600; }
+  .about .role { font-size: clamp(20px, 2.4vw, 26px); color: var(--ink-soft); margin: 16px 0 32px; }
+  .about p { color: var(--ink-soft); margin: 0 0 22px; max-width: 60ch; }
+  .about-photo {
+    border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line);
+    position: sticky; top: 110px;
+  }
+  .about-photo img { width: 100%; display: block; }
+  .about-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 12px; }
+
+  /* ---------- Footer ---------- */
+  .footer {
+    border-top: 1px solid var(--line);
+    padding: 40px 0; color: var(--ink-soft); font-size: 14px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+
+  /* ---------- Reveal animation ---------- */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* Hero load stagger */
+  .load { opacity: 0; transform: translateY(28px); animation: rise .9s var(--ease) forwards; }
+  .load.d1 { animation-delay: .05s; }
+  .load.d2 { animation-delay: .18s; }
+  .load.d3 { animation-delay: .32s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 820px) {
+    .nav-links { gap: 18px; }
+    .project { grid-template-columns: 1fr; gap: 24px; }
+    .project:nth-child(even) .project-media { order: 0; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-photo { position: static; max-width: 380px; }
+    .hero { min-height: 88vh; }
+  }
+  @media (max-width: 520px) {
+    .brand { font-size: 13px; }
+    .nav-links a { font-size: 14px; }
+  }
+
+  /* ---------- Accessibility ---------- */
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal, .load { transition: none; animation: none; opacity: 1; transform: none; }
+    .project-media img { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#top" class="brand">BAO HAN DAM</a>
+      <div class="nav-links">
+        <a href="#work">Portfolio</a>
+        <a href="#about-me">About me</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero wrap" id="top">
+    <h1 class="load d1">Hi, I'm Bao!</h1>
+    <p class="tagline load d2">I love to create.<br />And I want to make your life easier.</p>
+    <div class="hero-cta load d3">
+      <a href="#work" class="btn btn-primary">My work</a>
+      <a href="#about-me" class="btn btn-ghost">About me</a>
+    </div>
+  </header>
+
+  <!-- WORK -->
+  <section class="section wrap" id="work">
+    <div class="reveal">
+      <div class="eyebrow">Selected work</div>
+      <h2 class="section-title">Portfolio</h2>
+    </div>
+
+    <div class="projects">
+
+      <article class="project reveal">
+        <div class="project-media">
+          <img src="https://framerusercontent.com/images/HlfYoB4PGbdQYWDUKzXGbZyXO0.png" alt="AI Chatbot project preview" loading="lazy" />
+        </div>
+        <div class="project-body">
+          <div class="project-company">Lighthouse Germany</div>
+          <div class="project-tags">UI Design</div>
+          <h3 class="project-name">AI Chatbot — “Talk to your documents”</h3>
+          <a href="#" class="see-more">See more <span class="arrow">→</span></a>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-media">
+          <img src="https://framerusercontent.com/images/HPDilYTy7sSVRHpwPYFpDwbPJA.png?scale-down-to=2048" alt="HoloTrain project preview" loading="lazy" />
+        </div>
+        <div class="project-body">
+          <div class="project-company">HoloTrain</div>
+          <div class="project-tags">UX Research, UI Design, Usability Testing</div>
+          <h3 class="project-name">Creating a digital product — from research to concept to prototype</h3>
+          <a href="#" class="see-more">See more <span class="arrow">→</span></a>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-media">
+          <img src="https://framerusercontent.com/images/Bo1v4z5h3UdcZ3iVEamTGaMTtw.png" alt="TeamViewer UX project preview" loading="lazy" />
+        </div>
+        <div class="project-body">
+          <div class="project-company">TeamViewer</div>
+          <div class="project-tags">UX Research</div>
+          <h3 class="project-name">Assessment of the User Focus Program website</h3>
+          <a href="#" class="see-more">See more <span class="arrow">→</span></a>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-media">
+          <img src="https://framerusercontent.com/images/zEtXagQePzbfYW6Zv1aGMKDhyJc.png" alt="TeamViewer UI redesign preview" loading="lazy" />
+        </div>
+        <div class="project-body">
+          <div class="project-company">TeamViewer</div>
+          <div class="project-tags">UI Rework</div>
+          <h3 class="project-name">Overall redesign of the applications' user interface</h3>
+          <a href="#" class="see-more">See more <span class="arrow">→</span></a>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-media">
+          <img src="https://framerusercontent.com/images/X1StbVPrSDhIKwW9bj9giSlA.png" alt="XR Hub Bavaria digital twin preview" loading="lazy" />
+        </div>
+        <div class="project-body">
+          <div class="project-company">XR Hub Bavaria</div>
+          <div class="project-tags">VR Development</div>
+          <h3 class="project-name">Creating a Digital Twin in VR with Unity</h3>
+          <a href="#" class="see-more">See more <span class="arrow">→</span></a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section about" id="about-me">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="reveal">
+          <h2>Hi, I'm Bao!</h2>
+          <p class="role">I'm an aspiring UX/UI Designer.</p>
+          <p>Although I'm just starting out, I already bring nearly two years of experience in both the tech industry and consulting. I adapt my skills to meet the needs of any client, delivering high-quality, tailored solutions with fresh ideas and a versatile approach to ensure every project's success.</p>
+          <p>I'm based in Berlin but originally from a small town near Würzburg, Bavaria, where I earned my Bachelor's Degree in Human-Computer Systems in March 2024. My passion for creativity started in childhood, evolving from drawing to working with textiles, various DIY projects and exploring the musical field.</p>
+          <p>Growing up between two cultures and in a lower-income family has shaped my unique perspective on life. I deeply value empathy and kindness, and I believe that promoting inclusion and accessibility allows us all to contribute to a more just and equitable world.</p>
+          <div class="about-cta">
+            <a href="mailto:baohandam@outlook.de" class="btn btn-primary">Write me an email</a>
+            <a href="https://framerusercontent.com/assets/vMQlVTb4wkUwamahKZElo96yvQ.pdf" class="btn btn-ghost" target="_blank" rel="noopener">Download my CV</a>
+          </div>
+        </div>
+        <div class="about-photo reveal">
+          <img src="https://framerusercontent.com/images/LdA6H9extWGLHpq841jsHtsi0.png" alt="Portrait of Bao Han Dam" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="wrap footer">
+    <span>© <span id="year"></span> Bao Han Dam</span>
+    <a href="mailto:baohandam@outlook.de" style="text-decoration:none;">baohandam@outlook.de</a>
+  </footer>
+
+  <script>
+    // Nav background on scroll
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Scroll reveals
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
