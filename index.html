@@ -118,7 +118,7 @@ img{display:block;max-width:100%}
 /* ② Skills note */
 .pc-skills{--rot:-2deg;width:330px;left:30px;top:24px;z-index:2;background:transparent;box-shadow:none}
 .pc-skills .pc-img{border-radius:2px;box-shadow:2px 4px 10px rgba(0,0,0,.22),5px 12px 28px rgba(0,0,0,.14)}
-.skills-text{position:absolute;top:12%;left:9%;right:8%}
+.skills-text{position:absolute;top:5%;left:9%;right:8%}
 .skills-label{font-family:"DM Serif Display",serif;font-size:23px;color:var(--ink);margin-bottom:12px;border-bottom:1px solid rgba(61,48,40,.15);padding-bottom:8px}
 .skills-list{list-style:none;display:flex;flex-direction:column;gap:10px}
 .skills-list li{font-size:17px;color:var(--ink-mid);display:flex;align-items:center;gap:10px}
@@ -147,25 +147,25 @@ img{display:block;max-width:100%}
 
 /* ⑤ Availability sticker */
 .sticker-avail{
-  position:absolute;left:335px;top:42px;
+  position:absolute;left:945px;top:34px;
   width:92px;height:92px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   text-align:center;font-size:10px;font-weight:600;
   letter-spacing:.07em;text-transform:uppercase;
-  color:#3A4A20;padding:12px;line-height:1.35;
+  color:#3A4A20;padding:20px 12px 10px;line-height:1.35;
   background-color:#EDD96A;
   background-image:radial-gradient(circle,rgba(255,255,255,.2) 1.5px,transparent 1.5px);
   background-size:8px 8px;
   transform:rotate(-7deg);
   box-shadow:2px 4px 12px rgba(0,0,0,.22);
   animation:floatbadge 5s ease-in-out infinite;
-  z-index:4;
+  z-index:6;
 }
 @keyframes floatbadge{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(-5.5deg) translateY(-3px)}}
 
 /* ⑥ Main headline card */
 .pc-main{
-  --rot:-1.5deg;
+  --rot:0deg;
   width:600px;left:400px;top:70px;
   padding:30px 34px 34px;
   z-index:5;
@@ -181,17 +181,17 @@ img{display:block;max-width:100%}
 .hero-actions{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1;margin-top:6px}
 
 /* ⑦ Description (note2.png) */
-.pc-desc{--rot:2deg;width:380px;left:430px;top:520px;z-index:2;background:transparent;box-shadow:none}
+.pc-desc{--rot:2deg;width:380px;left:430px;top:480px;z-index:2;background:transparent;box-shadow:none}
 .pc-desc .pc-img{display:block;width:100%;filter:drop-shadow(2px 5px 10px rgba(0,0,0,.18))}
-.desc-text{position:absolute;top:15%;left:11%;right:11%;bottom:15%}
-.desc-text p{font-size:14px;color:var(--ink-mid);line-height:1.5}
+.desc-text{position:absolute;top:15%;left:15%;right:15%;bottom:15%;transform:rotate(-4deg);transform-origin:center}
+.desc-text p{font-size:14px;color:var(--ink-mid);line-height:2.0}
 .desc-text p strong{color:var(--ink);font-weight:500}
 
 /* ⑧ Business card */
 .pc-business{
   --rot:-2deg;
-  width:230px;left:850px;top:600px;
-  z-index:2;background:#F8F5EE;border-radius:5px;
+  width:230px;left:880px;top:640px;
+  z-index:6;background:#F8F5EE;border-radius:5px;
 }
 .pc-business:hover{transform:rotate(-.3deg) translateY(-5px)}
 .biz-top{padding:14px 18px 8px;display:flex;justify-content:space-between;align-items:flex-start}
@@ -210,7 +210,7 @@ img{display:block;max-width:100%}
 /* ⑩ Zuhause note */
 .pc-zuhause{
   --rot:3deg;
-  width:112px;left:1010px;top:200px;
+  width:112px;left:1110px;top:235px;
   padding:11px 13px;
   background:#FDEEA0;z-index:4;
 }
@@ -225,7 +225,7 @@ img{display:block;max-width:100%}
 }
 
 /* ⑫ Würzburg — flat photo card (no polaroid) */
-.pc-wuerzburg{--rot:-3deg;width:215px;left:1110px;top:300px;z-index:2;padding:0}
+.pc-wuerzburg{--rot:-3deg;width:215px;left:1055px;top:300px;z-index:2;padding:0}
 .pc-wuerzburg .pc-img{width:100%;display:block;object-fit:cover}
 .photo-cap{padding:7px 10px 9px;font-family:"DM Serif Display",serif;font-size:11px;color:var(--ink-mid);font-style:italic;background:#FFFDF8;text-align:center}
 
