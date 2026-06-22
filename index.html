@@ -48,33 +48,34 @@ img{display:block;max-width:100%}
 .nav-cta{font-size:14px;font-weight:500;text-decoration:none;padding:10px 22px;border-radius:999px;background:var(--forest);color:#fff;transition:background .2s,transform .2s var(--spring)}
 .nav-cta:hover{background:#2A3C30;transform:translateY(-2px) scale(1.03)}
 
-/* ══ CREAM WALL (scroll stage behind the board) ══ */
-.board-stage{margin-top:78px;overflow-x:auto;background:var(--bg)}
-
-/* ══ WOOD FRAME ══ */
-.board-frame{
-  width:fit-content;
-  margin:0 auto;
-  padding:24px;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='wf'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.9' numOctaves='8' seed='12' result='grain'/%3E%3CfeColorMatrix type='matrix' values='0.42 0.1 0.05 0 0.52 0 0.35 0.08 0 0.32 0 0.1 0.3 0 0.06 0 0 0 1 0' in='grain'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23wf)'/%3E%3C/svg%3E");
-  background-size:400px 400px;
-  box-shadow:0 16px 52px rgba(0,0,0,.32),inset 0 0 0 1px rgba(0,0,0,.2);
-}
-
-/* ══ CORK (real photo) ══ */
-.board{
+/* ══ FULL-BLEED CORK STAGE (fills the first screen, scrolls away normally) ══ */
+.board-stage{
+  margin-top:78px;
   position:relative;
-  width:1480px;height:860px;
-  overflow:visible;
+  width:100%;
+  height:calc(100vh - 78px);
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   background-image:url('Material/cork-wallpaper-25-wallpaper-background-hd.webp');
   background-size:cover;
   background-position:center;
 }
-.board::before{
-  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:
-    linear-gradient(to right,rgba(0,0,0,.16) 0%,transparent 5%,transparent 95%,rgba(0,0,0,.16) 100%),
-    linear-gradient(to bottom,rgba(0,0,0,.16) 0%,transparent 4%,transparent 96%,rgba(0,0,0,.16) 100%);
+
+/* ══ FRAME WRAPPER (frame-less — just centres the fixed cluster) ══ */
+.board-frame{
+  width:1480px;height:815px;
+  flex-shrink:0;
+  transform:scale(var(--board-scale,1));
+  transform-origin:center center;
+}
+
+/* ══ FIXED-SIZE CLUSTER ══ */
+.board{
+  position:relative;
+  width:1480px;height:815px;
+  overflow:visible;
 }
 
 /* ══ PUSH PINS ══ */
@@ -97,7 +98,8 @@ img{display:block;max-width:100%}
 }
 /* ══ WASHI TAPE ══ */
 .washi{position:absolute;z-index:6;pointer-events:none;display:block;filter:drop-shadow(1px 2px 3px rgba(0,0,0,.18))}
-/* hover lift/shadow removed per design — only the business card reacts */
+/* every piece reacts on hover — lifts, keeps its tilt, grows slightly */
+.pc:hover{transform:rotate(var(--rot,0deg)) translateY(-6px) scale(1.02);z-index:50}
 
 /* Image filling a card */
 .pc-img{display:block;width:100%;height:auto}
@@ -110,10 +112,10 @@ img{display:block;max-width:100%}
 /* ══ INDIVIDUAL CARD STYLES ══ */
 
 /* ① Girl — pure-CSS polaroid, real polaroid proportions */
-.pc-girl{--rot:2deg;width:150px;left:255px;top:455px;z-index:2;background:#FDFBF6;border-radius:2px;padding:9px 9px 32px;
+.pc-girl{--rot:2deg;width:150px;left:1110px;top:508px;z-index:2;background:#FDFBF6;border-radius:2px;padding:9px 9px 32px;
   box-shadow:0 1px 1px rgba(0,0,0,.14),2px 5px 12px rgba(0,0,0,.24),5px 14px 30px rgba(0,0,0,.14)}
-.pc-girl .polaroid-photo{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:#fff}
-.washi-polaroid{top:-15px;left:50%;width:78px;transform:translateX(-50%) rotate(-8deg)}
+.pc-girl .polaroid-photo{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;object-position:50% 18%;background:#fff}
+.washi-polaroid{top:-15px;left:42%;width:66px;transform:translateX(-50%) rotate(-8deg)}
 
 /* ② Skills note */
 .pc-skills{--rot:-2deg;width:330px;left:30px;top:24px;z-index:2;background:transparent;box-shadow:none}
@@ -122,7 +124,7 @@ img{display:block;max-width:100%}
 .skills-label{font-family:"DM Serif Display",serif;font-size:23px;color:var(--ink);margin-bottom:12px;border-bottom:1px solid rgba(61,48,40,.15);padding-bottom:8px}
 .skills-list{list-style:none;display:flex;flex-direction:column;gap:10px}
 .skills-list li{font-size:17px;color:var(--ink-mid);display:flex;align-items:center;gap:10px}
-.skill-fl{width:21px;height:auto;flex-shrink:0;display:block}
+.skill-fl{width:20px;height:auto;flex-shrink:0;display:block}
 .skills-list li:nth-child(1) .skill-fl{filter:hue-rotate(0deg)}
 .skills-list li:nth-child(2) .skill-fl{filter:hue-rotate(45deg)}
 .skills-list li:nth-child(3) .skill-fl{filter:hue-rotate(90deg)}
@@ -139,7 +141,7 @@ img{display:block;max-width:100%}
 .flight-co{position:absolute;top:60.5%;left:0;right:0;text-align:center;font-size:16px;font-weight:700;letter-spacing:.14em;color:#FBEFE2;text-transform:uppercase}
 
 /* ④ TeamViewer ticket */
-.pc-ticket{--rot:-2deg;width:210px;left:44px;top:686px;z-index:2;background:transparent;box-shadow:none}
+.pc-ticket{--rot:-2deg;width:210px;left:52px;top:668px;z-index:4;background:transparent;box-shadow:none}
 .pc-ticket .pc-img{display:block;width:100%;filter:drop-shadow(2px 4px 8px rgba(0,0,0,.22))}
 .ticket-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .ticket-co{font-family:"DM Serif Display",serif;font-size:14px;color:#2A1A0A;font-style:italic}
@@ -147,21 +149,23 @@ img{display:block;max-width:100%}
 
 /* ⑤ Availability sticker */
 .sticker-avail{
-  position:absolute;left:945px;top:34px;
-  width:92px;height:92px;border-radius:50%;
+  position:absolute;left:935px;top:30px;
+  width:110px;height:110px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  text-align:center;font-size:10px;font-weight:600;
+  text-align:center;font-size:11.5px;font-weight:600;
   letter-spacing:.07em;text-transform:uppercase;
-  color:#3A4A20;padding:20px 12px 10px;line-height:1.35;
-  background-color:#EDD96A;
+  color:#2E3D1E;padding:16px;line-height:1.35;
+  background-color:#A6CC95;
   background-image:radial-gradient(circle,rgba(255,255,255,.2) 1.5px,transparent 1.5px);
   background-size:8px 8px;
   transform:rotate(-7deg);
   box-shadow:2px 4px 12px rgba(0,0,0,.22);
   animation:floatbadge 5s ease-in-out infinite;
+  transition:transform .3s var(--spring);
   z-index:6;
 }
 @keyframes floatbadge{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(-5.5deg) translateY(-3px)}}
+.sticker-avail:hover{animation:none;transform:rotate(-5deg) translateY(-7px) scale(1.05);z-index:50}
 
 /* ⑥ Main headline card */
 .pc-main{
@@ -181,19 +185,19 @@ img{display:block;max-width:100%}
 .hero-actions{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1;margin-top:6px}
 
 /* ⑦ Description (note2.png) */
-.pc-desc{--rot:2deg;width:380px;left:430px;top:480px;z-index:2;background:transparent;box-shadow:none}
+.pc-desc{--rot:2deg;width:380px;left:430px;top:472px;z-index:2;background:transparent;box-shadow:none}
 .pc-desc .pc-img{display:block;width:100%;filter:drop-shadow(2px 5px 10px rgba(0,0,0,.18))}
-.desc-text{position:absolute;top:15%;left:15%;right:15%;bottom:15%;transform:rotate(-4deg);transform-origin:center}
+/* counter-rotate by the card's tilt so the text renders axis-aligned (crisp, no wobble) */
+.desc-text{position:absolute;top:15%;left:15%;right:15%;bottom:15%;transform:rotate(-2deg);transform-origin:center}
 .desc-text p{font-size:14px;color:var(--ink-mid);line-height:2.0}
 .desc-text p strong{color:var(--ink);font-weight:500}
 
 /* ⑧ Business card */
 .pc-business{
   --rot:-2deg;
-  width:230px;left:880px;top:640px;
+  width:230px;left:818px;top:516px;
   z-index:6;background:#F8F5EE;border-radius:5px;
 }
-.pc-business:hover{transform:rotate(-.3deg) translateY(-5px)}
 .biz-top{padding:14px 18px 8px;display:flex;justify-content:space-between;align-items:flex-start}
 .biz-label{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
 .biz-name{font-family:"DM Serif Display",serif;font-size:24px;font-weight:400;line-height:1.05;color:var(--ink);padding:0 18px 4px}
@@ -222,6 +226,7 @@ img{display:block;max-width:100%}
   width:168px;--rot:-7deg;transform:rotate(var(--rot));
   z-index:4;
   filter:drop-shadow(1px 2px 5px rgba(0,0,0,.28));
+  transition:transform .3s var(--spring),filter .3s;
 }
 
 /* ⑫ Würzburg — flat photo card (no polaroid) */
@@ -233,28 +238,37 @@ img{display:block;max-width:100%}
 .polaroid-wrap{position:relative;display:block}
 
 /* ⑬ Graduation cap card */
-.pc-graduation{--rot:1.5deg;width:200px;left:1236px;top:551px;z-index:2}
+.pc-graduation{--rot:1.5deg;width:200px;left:215px;top:450px;z-index:2}
 .pc-graduation .pc-img{width:100%;display:block;height:185px;object-fit:cover;object-position:center 32%}
 .grad-text{padding:12px 16px 16px;background:#FFFDF8}
 .grad-title{font-family:"DM Serif Display",serif;font-size:12px;color:var(--ink);line-height:1.3;margin-bottom:3px}
 .grad-sub{font-size:10px;color:var(--ink-soft)}
 
-/* ⑭ Saigon map — LARGE */
-.pc-saigon{--rot:-3.5deg;width:280px;left:914px;top:460px;z-index:3}
-.pc-saigon .pc-img{width:100%;display:block}
-.saigon-cap{padding:8px 10px 10px;font-family:"DM Serif Display",serif;font-size:11px;color:var(--ink-mid);font-style:italic;background:#FFFDF8;text-align:center}
+/* ⑭ Certification ribbons (floating, tilted, draggable) */
+.deco-ribbon{position:absolute;z-index:4;transform:rotate(var(--rot,0deg));filter:drop-shadow(1px 3px 5px rgba(0,0,0,.28));transition:transform .3s var(--spring),filter .3s}
+.deco-ribbon.r1{left:1045px;top:60px;width:140px;--rot:6deg}
+.deco-ribbon.r2{left:1310px;top:545px;width:165px;--rot:-5deg}
+/* hover lift for the floating image pieces (stamp + ribbons) */
+.deco-stamp:hover,.deco-ribbon:hover{transform:rotate(var(--rot)) translateY(-6px) scale(1.05);z-index:50;filter:drop-shadow(4px 10px 16px rgba(0,0,0,.3))}
 
 /* ══ DRAGGABLE BOARD ══ */
 @media(min-width:821px){
-  .board .pc,.board .sticker-avail,.board .deco-stamp{touch-action:none}
+  .board .pc,.board .sticker-avail,.board .deco-stamp,.board .deco-ribbon{touch-action:none}
 }
+/* Stop the browser's native image-drag ghost & text-selection from hijacking our pointer drag */
+.board .pc,.board .sticker-avail,.board .deco-stamp,.board .deco-ribbon{
+  -webkit-user-select:none;user-select:none;
+}
+.board img{-webkit-user-drag:none;user-select:none;pointer-events:none}
+/* the stamp & ribbons ARE the draggable element, so they must stay clickable */
+.board img.deco-stamp,.board img.deco-ribbon{pointer-events:auto}
 .pc.dragging{transition:none!important;transform:rotate(var(--rot)) scale(1.05)!important;z-index:60}
 .sticker-avail.dragging{animation:none!important;transform:rotate(-4deg) scale(1.07)!important;z-index:60}
-.deco-stamp.dragging{transform:rotate(var(--rot)) scale(1.07)!important;z-index:60;filter:drop-shadow(4px 10px 16px rgba(0,0,0,.32))}
+.deco-stamp.dragging,.deco-ribbon.dragging{transform:rotate(var(--rot)) scale(1.07)!important;z-index:60;filter:drop-shadow(4px 10px 16px rgba(0,0,0,.32))}
 #cur.grabbing{width:40px;height:40px;background:rgba(58,80,64,.18)}
 
-.board-hint{max-width:1528px;margin:14px auto 0;display:flex;justify-content:center;align-items:center;padding:0 24px;font-size:13px;color:var(--ink-soft)}
-.board-hint-txt{font-style:italic}
+.board-hint{position:absolute;top:14px;left:0;right:0;z-index:7;display:flex;justify-content:center;align-items:center;padding:0 24px;font-size:13px;color:var(--ink-mid);pointer-events:none}
+.board-hint-txt{font-style:italic;background:rgba(245,240,232,.55);padding:3px 12px;border-radius:999px;backdrop-filter:blur(2px)}
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:"DM Sans",sans-serif;font-weight:500;font-size:13px;text-decoration:none;padding:10px 20px;border-radius:999px;transition:transform .22s var(--spring),background .2s,color .2s,border-color .2s;white-space:nowrap}
@@ -343,8 +357,8 @@ img{display:block;max-width:100%}
 /* REVEALS */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
 .reveal.in{opacity:1;transform:none}
-.load{opacity:0;animation:fadein .85s var(--ease) forwards}
-.load.d1{animation-delay:.06s}.load.d2{animation-delay:.18s}.load.d3{animation-delay:.32s}.load.d4{animation-delay:.48s}
+.load{opacity:0;animation:fadein 1.4s var(--ease) forwards}
+.load.d1{animation-delay:.1s}.load.d2{animation-delay:.35s}.load.d3{animation-delay:.6s}.load.d4{animation-delay:.85s}
 @keyframes fadein{to{opacity:1}}
 
 /* RESPONSIVE — desktop board is fixed-size; this is the phone fallback */
@@ -357,7 +371,7 @@ img{display:block;max-width:100%}
   .board{width:auto;height:auto;min-height:auto;padding:80px 16px 36px;display:flex;flex-direction:column;align-items:center;gap:18px}
   .pc,.sticker-avail,.deco-stamp,.deco-flowers{position:static;left:auto;top:auto;transform:none !important;width:100%;max-width:460px;animation:none}
   .pc:hover{transform:none !important}
-  .pc-main::after,.pc-girl,.pc-flight,.pc-ticket{display:none}
+  .pc-main::after,.pc-girl,.pc-flight,.pc-ticket,.deco-ribbon{display:none}
   .sticker-avail{border-radius:999px;height:auto;width:auto;padding:10px 18px}
   .polaroid-photo{position:static;width:100%;height:180px;object-fit:cover}
   .polaroid-frame{display:none}
@@ -412,7 +426,7 @@ img{display:block;max-width:100%}
   <!-- ① Girl character inside polaroid frame -->
   <div class="pc pc-girl load d1" aria-label="Character illustration">
     <img class="washi washi-polaroid" src="Material/8344d1987f948a85b2c12a77d4f8767e.png" alt=""/>
-    <img class="polaroid-photo" src="Material/c7738b2aa4477016388b23feecd2ec39.jpg" alt="Girl character doodle"/>
+    <img class="polaroid-photo" src="Material/selfie.jpeg" alt="Bao Han Dam"/>
   </div>
 
   <!-- ② Skills note — note.png has its own pin built in -->
@@ -486,7 +500,7 @@ img{display:block;max-width:100%}
     <div class="pin sage"></div>
     <div class="biz-top">
       <div class="biz-label">UX / UI Design</div>
-      <img src="Material/hase-removebg-preview.png" alt="Bunny logo" width="38" style="margin-top:-4px"/>
+      <img src="Material/hase1.png" alt="Bunny logo" width="50" style="margin-top:-6px"/>
     </div>
     <div class="biz-name">Bao Han Dam.</div>
     <div class="biz-role">UX / UI Designer</div>
@@ -529,12 +543,9 @@ img{display:block;max-width:100%}
     </div>
   </article>
 
-  <!-- ⑭ Saigon map -->
-  <div class="pc pc-saigon load d3">
-    <div class="pin"></div>
-    <img class="pc-img" src="Material/DjvdFr4.jpg" alt="Vintage map of Saigon"/>
-    <div class="saigon-cap">Saigon ✦ origins</div>
-  </div>
+  <!-- ⑭ Certification ribbons -->
+  <img class="deco-ribbon r1 load d2" src="Material/ribbon.png" alt="CPRE — Certified Professional for Requirements Engineering"/>
+  <img class="deco-ribbon r2 load d3" src="Material/ribbon2.png" alt="CPUX — Certified Professional for Usability and User Experience"/>
 
 </div><!-- .board -->
 </div><!-- .board-frame -->
@@ -674,20 +685,42 @@ const cio=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){const i
 cards.forEach(c=>cio.observe(c));
 document.getElementById('yr').textContent=new Date().getFullYear();
 
+/* Stagger the corkboard load-in so each piece fades at its own speed */
+document.querySelectorAll('.board .load').forEach(el=>{
+  el.style.animationDuration=(1.1+Math.random()*0.6).toFixed(2)+'s'; // 1.1–1.7s
+  el.style.animationDelay=(Math.random()*0.8).toFixed(2)+'s';        // 0–0.8s
+});
+
 /* ── Draggable corkboard (positions are session-only; a reload restores the original layout) ── */
 (function(){
   const board=document.querySelector('.board');
   if(!board) return;
-  const items=[...board.querySelectorAll('.pc, .sticker-avail, .deco-stamp')];
+  const items=[...board.querySelectorAll('.pc, .sticker-avail, .deco-stamp, .deco-ribbon')];
   const cur=document.getElementById('cur');
+  const frame=document.querySelector('.board-frame');
+  const stage=document.querySelector('.board-stage');
   let zTop=50;
 
+  board.querySelectorAll('img').forEach(i=>i.setAttribute('draggable','false'));
+
+  /* Scale the fixed 1480×860 cluster to fill the viewport height (and width) responsively */
+  function curScale(){return parseFloat(getComputedStyle(frame).getPropertyValue('--board-scale'))||1;}
+  function fitBoard(){
+    if(window.innerWidth<=820){frame.style.removeProperty('--board-scale');return;}
+    const s=Math.min(stage.clientWidth/1480, stage.clientHeight/815, 1);
+    frame.style.setProperty('--board-scale', s);
+  }
+  fitBoard();
+  window.addEventListener('resize',fitBoard,{passive:true});
+
   items.forEach(el=>{
-    let sx,sy,bl,bt,moved,dragging;
+    let sx,sy,bl,bt,moved,dragging,scale;
+    el.addEventListener('dragstart',e=>e.preventDefault());
     el.addEventListener('pointerdown',e=>{
       if(e.button) return;                                   // primary button only
       if(getComputedStyle(el).position!=='absolute') return; // skip mobile stacked layout
       dragging=true; moved=false;
+      scale=curScale();                                      // pointer px → board px
       sx=e.clientX; sy=e.clientY;
       bl=parseFloat(getComputedStyle(el).left)||0;
       bt=parseFloat(getComputedStyle(el).top)||0;
@@ -695,8 +728,8 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     });
     el.addEventListener('pointermove',e=>{
       if(!dragging) return;
-      const dx=e.clientX-sx, dy=e.clientY-sy;
-      if(!moved && Math.hypot(dx,dy)<4) return;              // threshold → clicks still work
+      const dx=(e.clientX-sx)/scale, dy=(e.clientY-sy)/scale; // un-scale to board coords
+      if(!moved && Math.hypot(dx,dy)*scale<4) return;        // threshold → clicks still work
       if(!moved){
         moved=true;
         el.classList.add('dragging');
@@ -714,6 +747,8 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       cur&&cur.classList.remove('grabbing');
       if(moved){
         el.classList.remove('dragging');
+        const curRot=parseFloat(getComputedStyle(el).getPropertyValue('--rot'))||0;
+        el.style.setProperty('--rot',(curRot+(Math.random()*4-2)).toFixed(2)+'deg'); // settle at a new slight tilt
         el.addEventListener('click',function sup(ev){       // swallow the post-drag click
           ev.preventDefault(); ev.stopPropagation();
           el.removeEventListener('click',sup,true);
