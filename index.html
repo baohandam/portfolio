@@ -244,6 +244,18 @@ img{display:block;max-width:100%}
 .pc-saigon .pc-img{width:100%;display:block}
 .saigon-cap{padding:8px 10px 10px;font-family:"DM Serif Display",serif;font-size:11px;color:var(--ink-mid);font-style:italic;background:#FFFDF8;text-align:center}
 
+/* ══ DRAGGABLE BOARD ══ */
+@media(min-width:821px){
+  .board .pc,.board .sticker-avail,.board .deco-stamp{touch-action:none}
+}
+.pc.dragging{transition:none!important;transform:rotate(var(--rot)) scale(1.05)!important;z-index:60}
+.sticker-avail.dragging{animation:none!important;transform:rotate(-4deg) scale(1.07)!important;z-index:60}
+.deco-stamp.dragging{transform:rotate(var(--rot)) scale(1.07)!important;z-index:60;filter:drop-shadow(4px 10px 16px rgba(0,0,0,.32))}
+#cur.grabbing{width:40px;height:40px;background:rgba(58,80,64,.18)}
+
+.board-hint{max-width:1528px;margin:14px auto 0;display:flex;justify-content:center;align-items:center;padding:0 24px;font-size:13px;color:var(--ink-soft)}
+.board-hint-txt{font-style:italic}
+
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:"DM Sans",sans-serif;font-weight:500;font-size:13px;text-decoration:none;padding:10px 20px;border-radius:999px;transition:transform .22s var(--spring),background .2s,color .2s,border-color .2s;white-space:nowrap}
 .btn-primary{background:var(--forest);color:#fff}
@@ -340,6 +352,7 @@ img{display:block;max-width:100%}
   .wrap{padding:0 18px}
   .nav-inner{padding:16px 18px}
   .board-stage{overflow-x:hidden}
+  .board-hint{display:none}
   .board-frame{width:auto;padding:12px}
   .board{width:auto;height:auto;min-height:auto;padding:80px 16px 36px;display:flex;flex-direction:column;align-items:center;gap:18px}
   .pc,.sticker-avail,.deco-stamp,.deco-flowers{position:static;left:auto;top:auto;transform:none !important;width:100%;max-width:460px;animation:none}
@@ -390,6 +403,9 @@ img{display:block;max-width:100%}
 
 <!-- ══════════ CORKBOARD ══════════ -->
 <div class="board-stage">
+<div class="board-hint">
+  <span class="board-hint-txt">✦ psst — grab the pieces and rearrange the board · reload to tidy up</span>
+</div>
 <div class="board-frame" id="top">
 <div class="board">
 
@@ -657,6 +673,57 @@ const cards=[...document.querySelectorAll('.card')];
 const cio=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){const i=cards.indexOf(x.target);setTimeout(()=>x.target.classList.add('in'),i*90);cio.unobserve(x.target)}}),{threshold:.08});
 cards.forEach(c=>cio.observe(c));
 document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* ── Draggable corkboard (positions are session-only; a reload restores the original layout) ── */
+(function(){
+  const board=document.querySelector('.board');
+  if(!board) return;
+  const items=[...board.querySelectorAll('.pc, .sticker-avail, .deco-stamp')];
+  const cur=document.getElementById('cur');
+  let zTop=50;
+
+  items.forEach(el=>{
+    let sx,sy,bl,bt,moved,dragging;
+    el.addEventListener('pointerdown',e=>{
+      if(e.button) return;                                   // primary button only
+      if(getComputedStyle(el).position!=='absolute') return; // skip mobile stacked layout
+      dragging=true; moved=false;
+      sx=e.clientX; sy=e.clientY;
+      bl=parseFloat(getComputedStyle(el).left)||0;
+      bt=parseFloat(getComputedStyle(el).top)||0;
+      el.setPointerCapture(e.pointerId);
+    });
+    el.addEventListener('pointermove',e=>{
+      if(!dragging) return;
+      const dx=e.clientX-sx, dy=e.clientY-sy;
+      if(!moved && Math.hypot(dx,dy)<4) return;              // threshold → clicks still work
+      if(!moved){
+        moved=true;
+        el.classList.add('dragging');
+        cur&&cur.classList.add('grabbing');
+        el.style.zIndex=(++zTop);                            // bring to front
+      }
+      const m=60, bw=board.clientWidth, bh=board.clientHeight, w=el.offsetWidth, h=el.offsetHeight;
+      el.style.left=Math.max(-m,Math.min(bl+dx,bw-w+m))+'px';
+      el.style.top =Math.max(-m,Math.min(bt+dy,bh-h+m))+'px';
+    });
+    const end=e=>{
+      if(!dragging) return;
+      dragging=false;
+      try{el.releasePointerCapture(e.pointerId)}catch(_){}
+      cur&&cur.classList.remove('grabbing');
+      if(moved){
+        el.classList.remove('dragging');
+        el.addEventListener('click',function sup(ev){       // swallow the post-drag click
+          ev.preventDefault(); ev.stopPropagation();
+          el.removeEventListener('click',sup,true);
+        },true);
+      }
+    };
+    el.addEventListener('pointerup',end);
+    el.addEventListener('pointercancel',end);
+  });
+})();
 </script>
 </body>
 </html>
