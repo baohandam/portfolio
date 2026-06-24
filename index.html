@@ -45,12 +45,13 @@ img{display:block;max-width:100%}
 .nav-links a::after{content:"";position:absolute;left:0;bottom:-3px;width:100%;height:1.5px;background:var(--sage);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
 .nav-links a:hover{color:var(--ink)}
 .nav-links a:hover::after{transform:scaleX(1)}
-.nav-cta{font-size:14px;font-weight:500;text-decoration:none;padding:10px 22px;border-radius:999px;background:var(--forest);color:#fff;transition:background .2s,transform .2s var(--spring)}
-.nav-cta:hover{background:#2A3C30;transform:translateY(-2px) scale(1.03)}
+.nav-links a.nav-cta{font-size:14px;font-weight:500;text-decoration:none;padding:10px 22px;border-radius:999px;background:var(--forest);color:#fff;transition:background .2s,transform .2s var(--spring)}
+.nav-links a.nav-cta:hover{background:#2A3C30;color:#fff;transform:translateY(-2px) scale(1.03)}
 
 /* ══ FULL-BLEED CORK STAGE (fills the first screen, scrolls away normally) ══ */
 .board-stage{
   margin-top:78px;
+  transition:margin-top .34s var(--spring);
   position:relative;
   width:100%;
   height:calc(100vh - 78px);
@@ -62,6 +63,7 @@ img{display:block;max-width:100%}
   background-size:cover;
   background-position:center;
 }
+.board-stage.pushed{margin-top:130px}
 
 /* ══ FRAME WRAPPER (frame-less — just centres the fixed cluster) ══ */
 .board-frame{
@@ -124,7 +126,7 @@ img{display:block;max-width:100%}
 .skills-label{font-family:"DM Serif Display",serif;font-size:23px;color:var(--ink);margin-bottom:12px;border-bottom:1px solid rgba(61,48,40,.15);padding-bottom:8px}
 .skills-list{list-style:none;display:flex;flex-direction:column;gap:10px}
 .skills-list li{font-size:17px;color:var(--ink-mid);display:flex;align-items:center;gap:10px}
-.skill-fl{width:20px;height:auto;flex-shrink:0;display:block}
+.skill-fl{width:22px;height:auto;flex-shrink:0;display:block}
 .skills-list li:nth-child(1) .skill-fl{filter:hue-rotate(0deg)}
 .skills-list li:nth-child(2) .skill-fl{filter:hue-rotate(45deg)}
 .skills-list li:nth-child(3) .skill-fl{filter:hue-rotate(90deg)}
@@ -267,8 +269,10 @@ img{display:block;max-width:100%}
 .deco-stamp.dragging,.deco-ribbon.dragging{transform:rotate(var(--rot)) scale(1.07)!important;z-index:60;filter:drop-shadow(4px 10px 16px rgba(0,0,0,.32))}
 #cur.grabbing{width:40px;height:40px;background:rgba(58,80,64,.18)}
 
-.board-hint{position:absolute;top:14px;left:0;right:0;z-index:7;display:flex;justify-content:center;align-items:center;padding:0 24px;font-size:13px;color:var(--ink-mid);pointer-events:none}
-.board-hint-txt{font-style:italic;background:rgba(245,240,232,.55);padding:3px 12px;border-radius:999px;backdrop-filter:blur(2px)}
+/* Hint drawer — hidden strip between the fixed header and the board; pulls open on an upward scroll at the top */
+.board-drawer{position:fixed;top:78px;left:0;right:0;z-index:90;height:0;overflow:hidden;background:var(--bg);border-bottom:1px solid var(--line);transition:height .34s var(--spring)}
+.board-drawer.open{height:52px}
+.board-drawer-inner{height:52px;display:flex;align-items:center;justify-content:center;padding:0 24px;font-size:13px;font-style:italic;color:var(--ink-mid)}
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:"DM Sans",sans-serif;font-weight:500;font-size:13px;text-decoration:none;padding:10px 20px;border-radius:999px;transition:transform .22s var(--spring),background .2s,color .2s,border-color .2s;white-space:nowrap}
@@ -366,7 +370,7 @@ img{display:block;max-width:100%}
   .wrap{padding:0 18px}
   .nav-inner{padding:16px 18px}
   .board-stage{overflow-x:hidden}
-  .board-hint{display:none}
+  .board-drawer{display:none}
   .board-frame{width:auto;padding:12px}
   .board{width:auto;height:auto;min-height:auto;padding:80px 16px 36px;display:flex;flex-direction:column;align-items:center;gap:18px}
   .pc,.sticker-avail,.deco-stamp,.deco-flowers{position:static;left:auto;top:auto;transform:none !important;width:100%;max-width:460px;animation:none}
@@ -416,10 +420,10 @@ img{display:block;max-width:100%}
 </nav>
 
 <!-- ══════════ CORKBOARD ══════════ -->
-<div class="board-stage">
-<div class="board-hint">
-  <span class="board-hint-txt">✦ psst — grab the pieces and rearrange the board · reload to tidy up</span>
+<div class="board-drawer">
+  <div class="board-drawer-inner">✦ psst — grab the pieces and rearrange the board · reload to tidy up</div>
 </div>
+<div class="board-stage">
 <div class="board-frame" id="top">
 <div class="board">
 
@@ -437,14 +441,14 @@ img{display:block;max-width:100%}
       <div class="pc-text skills-text">
         <div class="skills-label">What I do</div>
         <ul class="skills-list">
-          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>UI Design</li>
-          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>UX Research</li>
-          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>Wireframing</li>
-          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>Prototyping</li>
-          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>Usability Testing</li>
-          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>User Interviews</li>
-          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>Design Systems</li>
-          <li><img src="Material/flower-removebg-preview.png" class="skill-fl" alt=""/>Requirements Engineering</li>
+          <li><img src="Material/blume_outline.png" class="skill-fl" alt=""/>UI Design</li>
+          <li><img src="Material/blume_outline.png" class="skill-fl" alt=""/>UX Research</li>
+          <li><img src="Material/blume_outline.png" class="skill-fl" alt=""/>Wireframing</li>
+          <li><img src="Material/blume_outline.png" class="skill-fl" alt=""/>Prototyping</li>
+          <li><img src="Material/blume_outline.png" class="skill-fl" alt=""/>Usability Testing</li>
+          <li><img src="Material/blume_outline.png" class="skill-fl" alt=""/>User Interviews</li>
+          <li><img src="Material/blume_outline.png" class="skill-fl" alt=""/>Design Systems</li>
+          <li><img src="Material/blume_outline.png" class="skill-fl" alt=""/>Requirements Engineering</li>
         </ul>
       </div>
     </div>
@@ -500,7 +504,7 @@ img{display:block;max-width:100%}
     <div class="pin sage"></div>
     <div class="biz-top">
       <div class="biz-label">UX / UI Design</div>
-      <img src="Material/hase1.png" alt="Bunny logo" width="50" style="margin-top:-6px"/>
+      <img src="Material/hase1.PNG" alt="Bunny logo" width="50" style="margin-top:-6px"/>
     </div>
     <div class="biz-name">Bao Han Dam.</div>
     <div class="biz-role">UX / UI Designer</div>
@@ -678,6 +682,38 @@ document.querySelectorAll('a,button,.card,.pc').forEach(el=>{
 });
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>20),{passive:true});
+
+/* ── Pull-to-reveal hint drawer: snaps open when you scroll up at the very top of the board, snaps shut on the way down ── */
+(function(){
+  const drawer=document.querySelector('.board-drawer');
+  const stage=document.querySelector('.board-stage');
+  if(!drawer||!stage) return;
+  let open=false;
+  const set=o=>{ if(o===open) return; open=o; drawer.classList.toggle('open',o); stage.classList.toggle('pushed',o); };
+  const desktop=()=>window.innerWidth>820;
+  const OPEN_PULL=180;   // accumulated upward force needed to reveal — a firm scroll, not a nudge
+  let pull=0, lastT=0;
+  window.addEventListener('wheel',e=>{
+    if(!desktop()) return;
+    const now=performance.now();
+    if(now-lastT>220) pull=0;        // forget stale momentum so it takes a fresh, deliberate pull
+    lastT=now;
+    if(e.deltaY>0){ pull=0; set(false); return; }   // any downward intent → snap shut
+    if(window.scrollY<=0){            // scrolling up while already at the top
+      pull-=e.deltaY;                 // deltaY is negative going up
+      if(pull>OPEN_PULL) set(true);
+    }
+  },{passive:true});
+  window.addEventListener('scroll',()=>{ if(window.scrollY>4) set(false); },{passive:true});
+  let ty=null;
+  window.addEventListener('touchstart',e=>{ ty=e.touches[0].clientY; },{passive:true});
+  window.addEventListener('touchmove',e=>{
+    if(!desktop()||ty===null) return;
+    const dy=e.touches[0].clientY-ty;               // finger pulling down at the top = opening the drawer
+    if(window.scrollY<=0 && dy>70) set(true);
+    else if(dy<-40) set(false);
+  },{passive:true});
+})();
 const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 const cards=[...document.querySelectorAll('.card')];
